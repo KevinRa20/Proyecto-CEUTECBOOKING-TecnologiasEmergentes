@@ -1,0 +1,52 @@
+<div class="fondo">
+  <div class="overlay"></div>
+  <div class="tarjeta">
+
+    <!-- LOGIN -->
+    <form *ngIf="!mostrarRegistro" (ngSubmit)="login()" class="fade">
+      <img src="https://ceutec.hn/wp-content/uploads/2025/01/logo-ceutec-web.png" alt="Logo CEUTEC" class="logo">
+      <h2>Login Estudiante</h2>
+
+      <label><i class="fas fa-envelope"></i> Correo:</label>
+      <input type="email" [(ngModel)]="correo" name="correo" required placeholder="ejemplo@correo.edu">
+
+      <label><i class="fas fa-lock"></i> Contraseña:</label>
+      <input type="password" [(ngModel)]="contrasena" name="contrasena" required placeholder="********">
+
+      <button type="submit" class="btn-login">
+        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+      </button>
+
+      <p>
+        ¿No tienes cuenta?
+        <a href="#" (click)="mostrarFormularioRegistro($event)">Registrarse aquí</a>
+      </p>
+    </form>
+
+    <!-- REGISTRO -->
+    <form *ngIf="mostrarRegistro" (ngSubmit)="registrar()" class="fade">
+      <img src="https://ceutec.hn/wp-content/uploads/2025/01/logo-ceutec-web.png" alt="Logo CEUTEC" class="logo">
+      <h2>Registro Estudiante</h2>
+
+      <label><i class="fas fa-user"></i> Nombre:</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" required placeholder="Tu nombre completo">
+
+      <label><i class="fas fa-envelope"></i> Correo:</label>
+      <input type="email" [(ngModel)]="correo" name="correoRegistro" required placeholder="ejemplo@correo.edu">
+
+      <label><i class="fas fa-lock"></i> Contraseña:</label>
+      <input type="password" [(ngModel)]="contrasena" name="contrasenaRegistro" required placeholder="********">
+
+      <button type="submit" class="btn-registro">
+        <i class="fas fa-user-plus"></i> Registrarse
+      </button>
+
+      <p>
+        ¿Ya tienes cuenta?
+        <a href="#" (click)="mostrarRegistro = false">Volver al login</a>
+      </p>
+    </form>
+
+    <p class="mensaje" [class.visible]="mensaje">{{ mensaje }}</p>
+  </div>
+</div>

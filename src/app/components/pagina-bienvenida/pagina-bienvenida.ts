@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pagina-bienvenida',
-  imports: [RouterLink],
+  standalone: true,
   templateUrl: './pagina-bienvenida.html',
-  styleUrl: './pagina-bienvenida.css',
+  styleUrls: ['./pagina-bienvenida.css']
 })
-export class PaginaBienvenida {
-
+export class PaginaBienvenidaComponent {
+  constructor(private router: Router) {}
+  irAEstudiante() { this.router.navigate(['/login-estudiante']); }
+  irADocente() { alert('👨‍🏫 Funcionalidad de docente próximamente.'); }
 }
