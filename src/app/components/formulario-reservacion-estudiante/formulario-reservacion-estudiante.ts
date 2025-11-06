@@ -19,6 +19,7 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
   campus = '';
   sede = '';
   tipoAula = '';
+  numeroaula = '';
   fecha = '';
   hora = '';
   resumen: any = null;
@@ -58,6 +59,7 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
       reservasRef,
       where('campus', '==', this.campus),
       where('tipoAula', '==', this.tipoAula),
+      where('numeroaula', '==', this.numeroaula),
       where('fecha', '==', this.fecha)
     );
 
@@ -95,11 +97,12 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
       campus: this.campus,
       sede: this.sede,
       tipoAula: this.tipoAula,
+      numeroaula: this.numeroaula,
       fecha: this.fecha,
       hora: this.hora
     };
   }
-
+//CREATE
   async confirmarReservacion() {
     if (!this.resumen) return;
 
@@ -122,6 +125,7 @@ Otros estudiantes: ${this.resumen.otrosEstudiantes.join(', ')}
 Campus: ${this.resumen.campus}
 Sede: ${this.resumen.sede}
 Tipo de aula: ${this.resumen.tipoAula}
+Número de aula: ${this.resumen.numeroaula}
 Fecha: ${this.resumen.fecha}
 Hora: ${this.resumen.hora} (1.5 h)
       `;
@@ -136,7 +140,7 @@ Hora: ${this.resumen.hora} (1.5 h)
       alert('❌ Error al confirmar la reservación.');
     }
   }
-
+//UPDATE 
   actualizarReservacion() {
     if (!this.resumen) return;
 
@@ -147,12 +151,13 @@ Hora: ${this.resumen.hora} (1.5 h)
     this.campus = this.resumen.campus;
     this.sede = this.resumen.sede;
     this.tipoAula = this.resumen.tipoAula;
+    this.numeroaula = this.resumen.numeroaula;
     this.fecha = this.resumen.fecha;
     this.hora = this.resumen.hora;
 
     this.resumen = null;
   }
-
+//DELETE
   async cancelarReservacion() {
     try {
       if (!this.docId) return;
@@ -170,6 +175,7 @@ Hora: ${this.resumen.hora} (1.5 h)
       this.campus = '';
       this.sede = '';
       this.tipoAula = '';
+      this.numeroaula = '';
       this.fecha = '';
       this.hora = '';
 

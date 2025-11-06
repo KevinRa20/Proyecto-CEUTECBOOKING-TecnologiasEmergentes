@@ -60,6 +60,10 @@
         <option value="Aula normal">Aula normal</option>
       </select>
     </div>
+  <div class="form-group">
+    <label><i class="fas fa-door-open icono beige"></i> Número de Aula</label>
+    <input type="text" [(ngModel)]="numeroaula" name="numeroaula" placeholder="Número de Aula" required>
+  </div>
 
     <div class="form-group">
       <label><i class="fas fa-calendar-alt icono azul"></i> Fecha</label>
@@ -121,6 +125,10 @@
         <span class="resumen-label">Tipo de aula:</span>
         <span class="resumen-value">{{ resumen.tipoAula }}</span>
       </div>
+      <div class="resumen-item">
+        <span class="resumen-label">Número de aula:</span>
+        <span class="resumen-value">{{ resumen.numeroaula }}</span>
+        
       <div class="resumen-item">
         <span class="resumen-label">Fecha:</span>
         <span class="resumen-value">{{ resumen.fecha }}</span>
