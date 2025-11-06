@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.contenedor {
+  background: url('https://vidauniversitaria.uanl.mx/wp-content/uploads/2023/02/revitalizacion-aulas-farq-16.jpg') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: brightness(0.8);
+}
+
+.tarjeta {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  padding: 40px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 3px solid #004aad;
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* ✅ Para ajustar en pantallas pequeñas */
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+}
+
+.icono-booking {
+  width: 70px;
+  height: 70px;
+}
+
+.titulo h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #004aad;
+  margin: 0;
+}
+
+.titulo h1 span {
+  color: #e53935;
+}
+
+.titulo p {
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+}
+
+.contenido h2 {
+  color: #004aad;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.contenido p {
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn {
+  border: none;
+  padding: 15px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn.estudiante {
+  background: linear-gradient(90deg, #004aad, #1976d2);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 74, 173, 0.4);
+}
+
+.btn.docente {
+  background: linear-gradient(90deg, #e53935, #b71c1c);
+  color: white;
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.4);
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.btn i {
+  font-size: 18px;
+}
+
+/* ✅ Responsive ajustes */
+@media (max-width: 600px) {
+  .tarjeta {
+    padding: 25px;
+    width: 90%;
+  }
+
+  .titulo h1 {
+    font-size: 22px;
+  }
+
+  .titulo p {
+    font-size: 13px;
+  }
+
+  .logo {
+    width: 60px;
+  }
+
+  .icono-booking {
+    width: 55px;
+  }
+
+  .contenido h2 {
+    font-size: 18px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .contenedor {
+    padding: 15px;
+    height: auto;
+  }
+}
