@@ -19,6 +19,7 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
   campus = '';
   sede = '';
   tipoAula = '';
+  numeroaula = '';
   fecha = '';
   hora = '';
   resumen: any = null;
@@ -51,23 +52,22 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
   }
 
   async cargarHorasOcupadas() {
-    if (!this.fecha || !this.campus || !this.tipoAula) return;
+    if (!this.fecha || !this.campus || !this.tipoAula || !this.numeroaula || !this.sede) return;
 
     const reservasRef = collection(this.firestore, 'reservas');
     const q = query(
       reservasRef,
       where('campus', '==', this.campus),
+      where('sede', '==', this.sede),
       where('tipoAula', '==', this.tipoAula),
+      where('numeroaula', '==', this.numeroaula),
       where('fecha', '==', this.fecha)
     );
 
     const snapshot = await getDocs(q);
-
-    // Corregido para que no haya error de tipo
-    this.horasOcupadas = snapshot.docs.map(doc => {
-      const data = doc.data() as { hora: string };
-      return data.hora;
-    });
+    this.horasOcupadas = snapshot.docs
+      .filter(doc => doc.id !== this.docId)
+      .map(doc => (doc.data() as { hora: string }).hora);
   }
 
   aceptarReservacion() {
@@ -95,6 +95,7 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
       campus: this.campus,
       sede: this.sede,
       tipoAula: this.tipoAula,
+      numeroaula: this.numeroaula,
       fecha: this.fecha,
       hora: this.hora
     };
@@ -122,6 +123,7 @@ Otros estudiantes: ${this.resumen.otrosEstudiantes.join(', ')}
 Campus: ${this.resumen.campus}
 Sede: ${this.resumen.sede}
 Tipo de aula: ${this.resumen.tipoAula}
+Número de aula: ${this.resumen.numeroaula}
 Fecha: ${this.resumen.fecha}
 Hora: ${this.resumen.hora} (1.5 h)
       `;
@@ -129,15 +131,14 @@ Hora: ${this.resumen.hora} (1.5 h)
       const QRCodeModule: any = await import('qrcode');
       this.qrDataUrl = await QRCodeModule.toDataURL(qrTexto);
 
-      alert('✅ Reservación confirmada y QR generado.');
-      this.cargarHorasOcupadas();
+      alert('✅ Reservación confirmada y QR generado');
+      await this.cargarHorasOcupadas();
     } catch (error) {
-      console.error(error);
-      alert('❌ Error al confirmar la reservación.');
+      console.error('Error al guardar reservación', error);
     }
   }
 
-  actualizarReservacion() {
+  async actualizarReservacion() {
     if (!this.resumen) return;
 
     this.nombre = this.resumen.nombre;
@@ -147,38 +148,42 @@ Hora: ${this.resumen.hora} (1.5 h)
     this.campus = this.resumen.campus;
     this.sede = this.resumen.sede;
     this.tipoAula = this.resumen.tipoAula;
+    this.numeroaula = this.resumen.numeroaula;
     this.fecha = this.resumen.fecha;
     this.hora = this.resumen.hora;
 
+    await this.cargarHorasOcupadas();
+
     this.resumen = null;
+    alert('✅ Formulario listo para actualizar');
   }
 
   async cancelarReservacion() {
-    try {
-      if (!this.docId) return;
-
-      const reservasRef = doc(this.firestore, 'reservas', this.docId);
-      await deleteDoc(reservasRef);
-
-      this.resumen = null;
-      this.qrDataUrl = '';
+    if (this.docId) {
+      try {
+        const docRef = doc(this.firestore, 'reservas', this.docId);
+        await deleteDoc(docRef);
+        alert('❌ Reservación cancelada');
+      } catch (error) {
+        console.error('Error al eliminar la reservación', error);
+        alert('⚠️ No se pudo eliminar la reservación de Firebase');
+      }
       this.docId = null;
-      this.nombre = '';
-      this.numeroCuenta = '';
-      this.correo = '';
-      this.otrosEstudiantes = [];
-      this.campus = '';
-      this.sede = '';
-      this.tipoAula = '';
-      this.fecha = '';
-      this.hora = '';
-
-      alert('🗑️ Reservación cancelada.');
-      this.cargarHorasOcupadas();
-    } catch (error) {
-      console.error(error);
-      alert('❌ Error al cancelar la reservación.');
     }
-  }
 
+    this.resumen = null;
+    this.nombre = '';
+    this.numeroCuenta = '';
+    this.correo = '';
+    this.otrosEstudiantes = [];
+    this.campus = '';
+    this.sede = '';
+    this.tipoAula = '';
+    this.numeroaula = '';
+    this.fecha = '';
+    this.hora = '';
+    this.qrDataUrl = '';
+
+    await this.cargarHorasOcupadas();
+  }
 }
