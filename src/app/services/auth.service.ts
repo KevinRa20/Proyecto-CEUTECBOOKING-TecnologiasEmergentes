@@ -11,7 +11,7 @@ export class AuthService {
   private db: Firestore;
 
   constructor() {
-    const app = initializeApp(firebaseConfig); // Inicializa Firebase solo con Firestore
+    const app = initializeApp(firebaseConfig);
     this.db = getFirestore(app);
   }
 
@@ -25,15 +25,15 @@ export class AuthService {
         where('contrasena', '==', contrasena)
       );
       const snapshot = await getDocs(q);
-      return !snapshot.empty; // true si existe coincidencia
+      return !snapshot.empty;
     } catch (error) {
-      console.error('Error login:', error);
+      console.error('Error login estudiante:', error);
       return false;
     }
-   
   }
-  // LOGIN: busca un docente con correo y contraseña
-async logindocente(correo: string, contrasena: string): Promise<boolean> {
+
+  // ✅ CORRECCIÓN: Nombre del método corregido (loginDocente en lugar de logindocente)
+  async loginDocente(correo: string, contrasena: string): Promise<boolean> {
     try {
       const docentesRef = collection(this.db, 'docentes');
       const q = query(
@@ -42,33 +42,44 @@ async logindocente(correo: string, contrasena: string): Promise<boolean> {
         where('contrasena', '==', contrasena)
       );
       const snapshot = await getDocs(q);
-      return !snapshot.empty; // true si existe coincidencia
+      return !snapshot.empty;
     } catch (error) {
-      console.error('Error login:', error);
+      console.error('Error login docente:', error);
       return false;
     }
-   
   }
+
   // REGISTRO: agrega un nuevo estudiante
   async registrarEstudiante(nombre: string, correo: string, contrasena: string): Promise<void> {
     try {
       const estudiantesRef = collection(this.db, 'estudiantes');
-      const docRef = doc(estudiantesRef); // crea un id automático
-      await setDoc(docRef, { nombre, correo, contrasena });
+      const docRef = doc(estudiantesRef);
+      await setDoc(docRef, { 
+        nombre, 
+        correo, 
+        contrasena,
+        fechaRegistro: new Date() 
+      });
     } catch (error) {
-      console.error('Error registro:', error);
-      throw error;
+      console.error('Error registro estudiante:', error);
+      throw new Error('No se pudo registrar el estudiante');
     }
   }
+
   // REGISTRO: agrega un nuevo docente
   async registrarDocente(nombre: string, correo: string, contrasena: string): Promise<void> {
     try {
       const docentesRef = collection(this.db, 'docentes');
-      const docRef = doc(docentesRef); // crea un id automático
-      await setDoc(docRef, { nombre, correo, contrasena });
+      const docRef = doc(docentesRef);
+      await setDoc(docRef, { 
+        nombre, 
+        correo, 
+        contrasena,
+        fechaRegistro: new Date() 
+      });
     } catch (error) {
-      console.error('Error registro:', error);
-      throw error;
+      console.error('Error registro docente:', error);
+      throw new Error('No se pudo registrar el docente');
     }
   }
 }
