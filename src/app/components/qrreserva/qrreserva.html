@@ -1,0 +1,136 @@
+<div class="contenedor-qrreserva">
+  <!-- Header con Logo -->
+  <div class="header">
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/CEUTEC_logo.svg/1200px-CEUTEC_logo.svg.png" 
+           alt="Logo CEUTEC" 
+           class="logo-imagen"
+           (error)="onImageError($event)">
+    </div>
+    <h1>CEUTEC</h1>
+    <p class="subtitulo">Centro Universitario Tecnológico</p>
+  </div>
+
+  <!-- Estado de carga -->
+  <div *ngIf="cargando" class="estado-carga">
+    <div class="spinner"></div>
+    <p>Verificando reservación...</p>
+  </div>
+
+  <!-- Reservación válida -->
+  <div *ngIf="!cargando && reservacionValida && reservacion" class="contenido-reserva">
+    
+    <!-- Información de emisión -->
+    <div class="informacion-emision">
+      <div class="campo-emision">
+        <label>Fecha de Emisión:</label>
+        <span>{{ fechaEmision }}</span>
+      </div>
+      <div class="campo-emision">
+        <label>Hora de Emisión:</label>
+        <span>{{ horaEmision }}</span>
+      </div>
+    </div>
+
+    <!-- Estado verificado -->
+    <div class="estado-verificado">
+      <i class="fas fa-check-circle"></i>
+      <h2>RESERVACIÓN COMPLETADA</h2>
+    </div>
+
+    <!-- Información de la reservación -->
+    <div class="informacion-reserva">
+      <h3>INFORMACIÓN DE LA RESERVACIÓN</h3>
+      
+      <div class="campo">
+        <label><i class="fas fa-user"></i> Nombre Completo:</label>
+        <span>{{ reservacion.nombre }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-id-card"></i> Número de Cuenta:</label>
+        <span>{{ reservacion.numeroCuenta }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-envelope"></i> Correo Institucional:</label>
+        <span>{{ reservacion.correo }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-university"></i> Campus:</label>
+        <span>{{ reservacion.campus }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-map-marker-alt"></i> Sede:</label>
+        <span>{{ reservacion.sede || 'No especificada' }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-chalkboard"></i> Tipo de Aula:</label>
+        <span>{{ reservacion.tipoAula }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-door-open"></i> Número de Aula:</label>
+        <span>{{ reservacion.numeroaula }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-calendar-alt"></i> Fecha de Reservación:</label>
+        <span>{{ reservacion.fecha }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-clock"></i> Hora de Reservación:</label>
+        <span>{{ reservacion.hora }} (Duración: 1.5 horas)</span>
+      </div>
+      
+      <div class="campo full-width" *ngIf="reservacion.otrosEstudiantes && reservacion.otrosEstudiantes.length > 0">
+        <label><i class="fas fa-users"></i> Otros Estudiantes:</label>
+        <span class="lista-estudiantes">{{ reservacion.otrosEstudiantes.join(', ') }}</span>
+      </div>
+    </div>
+
+    <!-- Mensaje de presentación -->
+    <div class="mensaje-presentacion">
+      <i class="fas fa-id-card"></i>
+      <div class="texto-mensaje">
+        <h4>PRESENTAR EN CASO DE SER REQUERIDO POR LAS AUTORIDADES UNIVERSITARIAS</h4>
+      </div>
+    </div>
+
+    <!-- Botón para volver -->
+    <div class="botones-reserva">
+      <button class="btn-volver" (click)="volverInicio()">
+        <i class="fas fa-arrow-left"></i> Volver al Formulario
+      </button>
+    </div>
+  </div>
+
+  <!-- Reservación no encontrada -->
+  <div *ngIf="!cargando && !reservacionValida && !error" class="estado-error">
+    <div class="tarjeta-error">
+      <i class="fas fa-times-circle"></i>
+      <h2>RESERVACIÓN NO ENCONTRADA</h2>
+      <p>La reservación no existe en nuestro sistema.</p>
+      <p>Verifique el código QR escaneado.</p>
+      <button class="btn-volver" (click)="volverInicio()">
+        <i class="fas fa-arrow-left"></i> Volver al Formulario
+      </button>
+    </div>
+  </div>
+
+  <!-- Error de verificación -->
+  <div *ngIf="!cargando && error" class="estado-error">
+    <div class="tarjeta-error">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h2>ERROR DE VERIFICACIÓN</h2>
+      <p>No se pudo verificar la reservación en este momento.</p>
+      <button class="btn-volver" (click)="volverInicio()">
+        <i class="fas fa-arrow-left"></i> Volver al Formulario
+      </button>
+    </div>
+  </div>
+</div>

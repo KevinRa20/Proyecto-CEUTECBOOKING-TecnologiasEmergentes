@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
-
+/* ===== GENERAL ===== */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #e1f0ff;
   margin: 0;
   padding: 0;
@@ -10,35 +8,36 @@ body {
 
 .contenedor-formulario {
   max-width: 900px;
-  margin: 30px auto;
-  padding: 30px 40px;
-  background: #f0f7ff; 
-  border-radius: 15px;
-  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.12);
+  margin: 20px auto;
+  padding: 20px 15px;
+  background: #f0f7ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .titulo-form {
   text-align: center;
   color: #004aad;
-  margin-bottom: 30px;
-  font-size: 32px;
-  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
+/* ===== FORMULARIO - MOBILE FIRST ===== */
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
-}
-
-.form-group.full-width {
-  grid-column: span 2;
+  margin-bottom: 8px;
 }
 
 .form-group label {
@@ -46,38 +45,40 @@ body {
   margin-bottom: 8px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 14px;
   color: #333;
 }
 
+/* Iconos */
 .icono.azul { color: #004aad; }
 .icono.rojo { color: #e53935; }
 .icono.beige { color: #f5c97b; }
 
-/* CAMPOS MÁS COMPACTOS */
 input, select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 14px;
-  transition: 0.3s;
   background: white;
-  height: 42px;
+  height: 44px;
+  box-sizing: border-box;
+  margin-top: 4px;
+  transition: all 0.2s ease;
 }
 
 input:focus, select:focus {
   border-color: #004aad;
   outline: none;
-  box-shadow: 0 0 6px rgba(0, 74, 173, 0.25);
+  box-shadow: 0 0 4px rgba(0, 74, 173, 0.2);
 }
 
-/* Estilos específicos para el campo de otros estudiantes */
+/* Contenedor agregar estudiantes */
 .agregar-container {
   display: flex;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-top: 4px;
 }
 
 .input-estudiante {
@@ -85,120 +86,187 @@ input:focus, select:focus {
 }
 
 .btn-agregar {
-  padding: 10px 12px;
+  padding: 8px 12px;
   background: #004aad;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
   font-weight: 600;
-  min-width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: 0.2s;
+  height: 44px;
+  min-width: 44px;
 }
 
 .btn-agregar:hover {
   background: #003a8c;
-  transform: scale(1.05);
 }
 
-.lista-estudiantes-container {
-  margin-top: 8px;
-}
-
+/* Lista de estudiantes */
 .lista-estudiantes {
-  list-style-type: none;
-  margin: 0;
+  list-style: none;
+  margin: 12px 0 0 0;
   padding: 0;
-  background: white;
-  border-radius: 6px;
   border: 1px solid #ddd;
+  border-radius: 6px;
   max-height: 100px;
   overflow-y: auto;
   font-size: 13px;
+  background: white;
 }
 
-.lista-estudiantes li {
-  padding: 6px 10px;
+.estudiante-item {
+  padding: 8px 10px;
   border-bottom: 1px solid #eee;
   color: #555;
-}
-
-.lista-estudiantes li:last-child {
-  border-bottom: none;
-}
-
-/* Botones principales */
-.botones-formulario {
-  grid-column: span 2;
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
+  justify-content: space-between;
+  align-items: center;
 }
 
-button:not(.btn-agregar) {
-  padding: 12px 20px;
+.btn-eliminar {
+  background: none;
   border: none;
-  border-radius: 8px;
+  color: #e53935;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+}
+
+.btn-eliminar:hover {
+  background-color: #ffebee;
+}
+
+/* ===== ESTILOS PARA HORAS OCUPADAS ===== */
+.hora-ocupada {
+  color: #e53935 !important;
+  text-decoration: line-through !important;
+  background-color: #ffebee !important;
+  opacity: 0.7;
+}
+
+select option:disabled {
+  color: #e53935;
+  text-decoration: line-through;
+  background-color: #ffebee;
+}
+
+.cargando-horas {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #004aad;
+  margin-top: 6px;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ===== BOTONES ===== */
+.botones-formulario, .botones-resumen {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.btn-aceptar, .btn-confirmar, .btn-actualizar, .btn-cancelar {
+  color: white;
+  border: none;
+  border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
-  transition: 0.3s;
   display: flex;
   align-items: center;
   gap: 6px;
   font-weight: 600;
+  transition: 0.2s;
+  justify-content: center;
+  padding: 10px 20px;
+  width: auto;
+  min-width: 140px;
+  max-width: 200px;
 }
 
-.btn-aceptar { background: #004aad; color: white; }
-.btn-confirmar { background: #009688; color: white; }
-.btn-actualizar { background: #ffc107; color: #333; }
-.btn-cancelar { background: #e53935; color: white; }
+.btn-aceptar { background: #004aad; }
+.btn-confirmar { background: #4caf50; }
+.btn-actualizar { background: #ff9800; }
+.btn-cancelar { background: #e53935; }
 
-button:not(.btn-agregar):hover {
-  transform: scale(1.05);
+.btn-aceptar:hover, .btn-confirmar:hover, 
+.btn-actualizar:hover, .btn-cancelar:hover {
   opacity: 0.9;
 }
 
-/* ESTILOS MEJORADOS DEL RESUMEN */
+.btn-aceptar:disabled, .btn-confirmar:disabled,
+.btn-actualizar:disabled, .btn-cancelar:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ===== RESUMEN ===== */
 .resumen-reservacion {
   background: #f7faff;
-  padding: 25px;
-  border-radius: 12px;
-  margin-top: 25px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 20px 15px;
+  border-radius: 10px;
+  margin-top: 20px;
   border: 1px solid #e0e0e0;
 }
 
-.titulo-resumen {
+.resumen-contenido {
+  width: 100%;
+}
+
+.resumen-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #004aad;
+  border-bottom: 1px solid #e1f0ff;
 }
 
-.titulo-resumen img { 
-  width: 45px; 
+.logo-placeholder {
+  width: 50px;
+  height: 50px;
+  background: #004aad;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
 }
 
-.titulo-resumen h3 {
+.fecha-hora-emision {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   color: #004aad;
-  font-size: 24px;
-  margin: 0;
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
 }
 
-.info-resumen {
+/* CONTAINER DE DATOS */
+.datos-container {
+  background: white;
+  border-radius: 8px;
+  padding: 0;
+  border: 1px solid #e1f0ff;
   margin-bottom: 20px;
 }
 
 .resumen-item {
   display: flex;
-  margin-bottom: 12px;
-  padding: 8px 0;
+  flex-direction: column;
+  padding: 12px 15px;
   border-bottom: 1px solid #f0f0f0;
 }
 
@@ -209,15 +277,19 @@ button:not(.btn-agregar):hover {
 .resumen-label {
   font-weight: 600;
   color: #333;
-  min-width: 140px;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  margin-bottom: 4px;
 }
 
 .resumen-value {
   color: #555;
-  flex: 1;
-  font-size: 14px;
+  font-size: 13px;
   word-break: break-word;
+  padding-left: 24px;
+  line-height: 1.4;
 }
 
 .separador {
@@ -226,77 +298,214 @@ button:not(.btn-agregar):hover {
   margin: 20px 0;
 }
 
-.botones-resumen {
+/* ===== ESTADO DE CARGA ===== */
+.estado-carga {
+  text-align: center;
+  padding: 20px 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 15px;
+  border: 1px dashed #004aad;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #004aad;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto 15px;
+}
+
+.estado-carga p {
+  color: #004aad;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== CONFIRMACIÓN EXITOSA ===== */
+.confirmacion-exitosa {
+  text-align: center;
+  padding: 30px 20px;
+  background: white;
+  border-radius: 12px;
+  border: 2px solid #4caf50;
+}
+
+.icono-exito {
+  font-size: 60px;
+  color: #4caf50;
+  margin-bottom: 15px;
+}
+
+.titulo-confirmacion {
+  color: #4caf50;
+  font-size: 24px;
+  margin: 15px 0 8px 0;
+  font-weight: 600;
+}
+
+.mensaje-confirmacion {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.imagen-check {
+  font-size: 80px;
+  color: #4caf50;
+  margin: 20px 0;
+}
+
+/* ===== QR SIMPLIFICADO ===== */
+.qr-container-simple {
+  margin: 20px 0;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e1f0ff;
+  text-align: center;
+}
+
+.qr-simple {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  align-items: center;
+  margin: 12px 0;
 }
 
-.botones-resumen button {
-  padding: 10px 18px;
-  font-size: 13px;
+.qr-image-simple {
+  width: 180px;
+  height: 180px;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  background: white;
+  padding: 6px;
 }
 
-.qr-container { 
-  text-align: center; 
-  margin-top: 20px; 
-  padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
-}
-
-.qr-container h4 {
-  color: #004aad;
-  margin-bottom: 15px;
-  font-size: 16px;
-}
-
-.qr-container img {
-  width: 150px;
-  border: 2px solid #004aad;
+/* Estado de carga para QR */
+.qr-cargando {
+  text-align: center;
+  padding: 15px;
+  background: #f8f9fa;
   border-radius: 8px;
+  margin: 15px 0;
 }
 
-/* Tachado de horas ocupadas */
-select option:disabled {
-  color: #e53935;
-  text-decoration: line-through;
+.qr-cargando p {
+  color: #004aad;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
 }
 
-@media (max-width: 768px) {
-  .form-grid { 
-    grid-template-columns: 1fr; 
-    gap: 15px;
+.btn-regenerar-qr {
+  background: #004aad;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  transition: 0.2s;
+}
+
+.btn-regenerar-qr:hover {
+  background: #003a8c;
+}
+
+/* ===== BREAKPOINTS OPTIMIZADOS ===== */
+
+/* Teléfonos grandes */
+@media (min-width: 480px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
   }
   
-  .form-group.full-width {
-    grid-column: span 1;
+  .botones-formulario, .botones-resumen { 
+    flex-direction: row; 
+    justify-content: center;
   }
   
-  .agregar-container {
-    flex-direction: column;
+  .resumen-header { 
+    flex-direction: row; 
+    justify-content: space-between; 
   }
   
-  .btn-agregar {
-    width: 100%;
+  .fecha-hora-emision { 
+    text-align: right; 
   }
-  
-  .botones-formulario,
-  .botones-resumen { 
-    flex-direction: column; 
-  }
-  
-  .contenedor-formulario {
-    padding: 20px;
-    margin: 15px;
-  }
-  
+
   .resumen-item {
-    flex-direction: column;
-    gap: 4px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .resumen-label {
+    min-width: 120px;
+    margin-bottom: 0;
+  }
+
+  .resumen-value {
+    padding-left: 0;
+    flex: 1;
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) {
+  .form-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+  }
+
+  .form-group.agregar-container,
+  .form-group select[name="hora"],
+  .form-group input[name="numeroaula"] { 
+    grid-column: span 2; 
+  }
+
+  .datos-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .datos-container .resumen-item:nth-child(1),
+  .datos-container .resumen-item:nth-child(2),
+  .datos-container .resumen-item:nth-child(9),
+  .datos-container .resumen-item:nth-child(10) {
+    grid-column: span 2;
+  }
+}
+
+/* Escritorio */
+@media (min-width: 1024px) {
+  .form-grid { 
+    grid-template-columns: repeat(3, 1fr); 
+  }
+
+  .form-group.agregar-container { 
+    grid-column: span 3; 
   }
   
-  .resumen-label {
-    min-width: auto;
+  .form-group select[name="hora"] { 
+    grid-column: span 2; 
+  }
+  
+  .form-group input[name="numeroaula"] { 
+    grid-column: span 1; 
   }
 }
