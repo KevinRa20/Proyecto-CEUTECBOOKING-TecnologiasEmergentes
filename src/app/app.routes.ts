@@ -19,3 +19,7 @@ export const routes: Routes = [
   { path: 'qrreserva', component: QrreservaComponent },
   { path: '**', redirectTo: '' }
 ];
+  { path: 'formulario-reservacion-docente', component: FormularioReservacionDocente }
+  
+   
+];

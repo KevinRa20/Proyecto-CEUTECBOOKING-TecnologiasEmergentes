@@ -185,3 +185,4 @@ Hora: ${this.resumen.hora} (1.5 h)
     }
   }
 }
+}
