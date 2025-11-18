@@ -2,9 +2,15 @@
   <div class="tarjeta">
     <h2>Registro Docente</h2>
     <form (ngSubmit)="registrar()">
-      <label>Nombre:</label><input type="text" [(ngModel)]="nombre" name="nombre" required>
-      <label>Correo:</label><input type="email" [(ngModel)]="correo" name="correo" required>
-      <label>Contraseña:</label><input type="password" [(ngModel)]="contrasena" name="contrasena" required>
+      <label>Nombre:</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" required>
+      
+      <label>Correo:</label>
+      <input type="email" [(ngModel)]="correo" name="correo" required>
+      
+      <label>Contraseña:</label>
+      <input type="password" [(ngModel)]="contrasena" name="contrasena" required>
+      
       <button type="submit">Registrarse</button>
     </form>
     <p class="mensaje">{{ mensaje }}</p>

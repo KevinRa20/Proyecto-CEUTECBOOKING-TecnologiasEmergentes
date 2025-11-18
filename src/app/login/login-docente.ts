@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -12,11 +12,12 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login-docente.css']
 })
 export class LoginDocenteComponent {
-  nombre = '';
   correo = '';
   contrasena = '';
+  nombre = '';
   mensaje = '';
   mostrarRegistro = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   // LOGIN
@@ -30,14 +31,14 @@ export class LoginDocenteComponent {
     }
 
     try {
-      const ok = await this.authService.logindocente(this.correo, this.contrasena);
+      const ok = await this.authService.loginDocente(this.correo, this.contrasena);
 
       if (ok) {
         this.mensaje = '✅ Inicio de sesión exitoso';
         setTimeout(() => this.router.navigate(['/formulario-reservacion-docente']), 1000);
       } else {
         this.mensaje = '❌ Usuario no registrado. Por favor regístrate.';
-        this.mostrarRegistro = true; // muestra registro automáticamente
+        this.mostrarRegistro = true;
       }
     } catch (error: any) {
       this.mensaje = '⚠️ Error al iniciar sesión: ' + error.message;
@@ -71,9 +72,8 @@ export class LoginDocenteComponent {
 
   // Muestra el formulario de registro desde el enlace
   mostrarFormularioRegistro(event: Event) {
-    event.preventDefault(); // evita que el enlace recargue la página
+    event.preventDefault();
     this.mostrarRegistro = true;
     this.mensaje = '';
   }
-  
 }
