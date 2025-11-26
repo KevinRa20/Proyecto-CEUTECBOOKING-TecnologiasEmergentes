@@ -1,161 +1,189 @@
 <div class="contenedor-formulario">
-  <h2 class="titulo-form">Reserva Tu Aula</h2>
-
-  <form *ngIf="!resumen" class="form-grid">
-
-    <!-- Fila 1: Nombre completo y Número de cuenta -->
-    <div class="form-group">
-      <label><i class="fas fa-user icono azul"></i> Nombre completo</label>
-      <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Ingrese su nombre completo" required>
+  <!-- PANTALLA DE CONFIRMACIÓN EXITOSA -->
+  <div *ngIf="reservacionConfirmada" class="confirmacion-exitosa">
+    <div class="icono-exito">
+      <i class="fas fa-check-circle"></i>
     </div>
-
-    <div class="form-group">
-      <label><i class="fas fa-briefcase icono rojo"></i> Nombre de la carrera</label>
-      <input type="text" [(ngModel)]="nombredelacarrera" name="nombredelacarrera" placeholder="Nombre de la Carrera" required>
+    <h2 class="titulo-confirmacion">¡Reservación Confirmada!</h2>
+    <p class="mensaje-confirmacion">Tu reserva se ha completado satisfactoriamente</p>
+    
+    <div class="imagen-check">
+      <i class="fas fa-check-double"></i>
     </div>
-
-    <!-- Fila 2: Correo educativo y añadir clase y seccion -->
-    <div class="form-group">
-      <label><i class="fas fa-envelope icono azul"></i> Correo educativo</label>
-      <input type="email" [(ngModel)]="correo" name="correo" placeholder="ejemplo@dominio.edu" required>
-    </div>
-
-  <div class="form-group">
-      <label><i class="fas fa-users icono beige"></i> Añadir Clase y Seccion</label>
-      <div class="agregar-container">
-        <input #NuevaClase type="text" placeholder="Ingrese su clase y seccion" class="input-clase">
-        <button type="button" class="btn-agregar" (click)="agregarClaseyseccion(NuevaClase.value); NuevaClase.value=''">
-          <i class="fas fa-plus"></i> 
-        </button>
+    
+    <!-- CONTENEDOR DEL QR SIMPLIFICADO -->
+    <div class="qr-container-simple" *ngIf="qrGenerado">
+      <!-- Estado de carga -->
+      <div *ngIf="generandoQR && !qrCargado" class="qr-cargando">
+        <div class="spinner"></div>
+        <p>Generando código QR...</p>
       </div>
-      <div class="lista-clases-container">
+
+      <!-- QR Generado Simple -->
+      <div *ngIf="!generandoQR && qrDataUrl" class="qr-simple">
+        <img [src]="qrDataUrl" 
+             alt="Código QR de reservación" 
+             class="qr-image-simple"
+             (load)="onQRLoaded()"
+             (error)="onQRError()">
+      </div>
+
+      <!-- Botón para regenerar -->
+      <button class="btn-regenerar-qr" (click)="regenerarQR()" *ngIf="errorQR || !qrCargado">
+        <i class="fas fa-sync-alt"></i> Reintentar QR
+      </button>
+    </div>
+  </div>
+
+  <!-- FORMULARIO PRINCIPAL -->
+  <div *ngIf="!resumen && !reservacionConfirmada">
+    <h2 class="titulo-form">
+      <i class="fas fa-calendar-check"></i>
+      Formulario de Reservación
+    </h2>
+
+    <form class="form-grid">
+      <div class="form-group">
+        <label><i class="fas fa-user icono azul"></i> Nombre completo</label>
+        <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Ingrese su nombre completo" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-user-tie icono rojo"></i> Nombre de la Carrera</label>
+        <input type="text" [(ngModel)]="nombreCarrera" name="nombreCarrera" placeholder="Nombre de la Carrera" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-envelope icono azul"></i> Correo educativo</label>
+        <input type="email" [(ngModel)]="correo" name="correo" placeholder="ejemplo@dominio.edu" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-user-friends icono beige"></i> Añadir Clase y Seccion </label>
+        <div class="agregar-container">
+          <input #nuevaclase type="text" placeholder="Nombre de la clase y seccion" class="input-agregar">
+          <button type="button" class="btn-agregar" (click)="agregarclase(nuevaclase.value); nuevaclase.value=''">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
         <ul class="lista-clases">
-          <li *ngFor="let clase of nuevaClase">{{ clase }}</li>
+          <li *ngFor="let cls of otraclase; let i = index" class="clase-item">
+            <span>{{ cls }}</span>
+            <button type="button" class="btn-eliminar" (click)="eliminarclase(i)">
+              <i class="fas fa-times"></i>
+            </button>
+          </li>
         </ul>
       </div>
-    </div>
 
-    <!-- Fila 3: Campus y Sede -->
-    <div class="form-group">
-      <label><i class="fas fa-university icono azul"></i> Campus</label>
-      <select [(ngModel)]="campus" name="campus" (change)="cargarHorasOcupadas()">
-        <option value="">Seleccione un campus</option>
-        <option *ngFor="let c of campusOpciones" [value]="c">{{ c }}</option>
-      </select>
-    </div>
+      <div class="form-group">
+        <label><i class="fas fa-university icono azul"></i> Campus</label>
+        <select [(ngModel)]="campus" name="campus" (change)="cargarHorasOcupadas()">
+          <option value="">Seleccione un campus</option>
+          <option *ngFor="let c of campusOpciones" [value]="c">{{ c }}</option>
+        </select>
+      </div>
 
-    <div class="form-group">
-      <label><i class="fas fa-map-marker-alt icono rojo"></i> Sede</label>
-      <input type="text" [(ngModel)]="sede" name="sede" placeholder="Sede de la reservación">
-    </div>
+      <div class="form-group">
+        <label><i class="fas fa-map-marker-alt icono rojo"></i> Sede</label>
+        <input type="text" [(ngModel)]="sede" name="sede" placeholder="Sede de la reservación">
+      </div>
 
-    <!-- Fila 4: Tipo de aula y Fecha -->
-    <div class="form-group">
-      <label><i class="fas fa-chalkboard icono beige"></i> Tipo de aula</label>
-      <select [(ngModel)]="tipoAula" name="tipoAula" (change)="cargarHorasOcupadas()">
-        <option value="">Seleccione tipo de aula</option>
-        <option value="Salón de estudio">Salón de estudio</option>
-        <option value="Laboratorio">Laboratorio</option>
-        <option value="Aula para eventos">Aula para eventos</option>
-        <option value="Aula normal">Aula normal</option>
-      </select>
-    </div>
-  <div class="form-group">
-    <label><i class="fas fa-door-open icono beige"></i> Número de Aula</label>
-    <input type="text" [(ngModel)]="numeroaula" name="numeroaula" placeholder="Número de Aula" required>
+      <div class="form-group">
+        <label><i class="fas fa-chalkboard icono beige"></i> Tipo de aula</label>
+        <select [(ngModel)]="tipoAula" name="tipoAula" (change)="cargarHorasOcupadas()">
+          <option value="">Seleccione tipo de aula</option>
+          <option value="Salón de estudio">Salón de estudio</option>
+          <option value="Laboratorio">Laboratorio</option>
+          <option value="Aula para eventos">Aula para eventos</option>
+          <option value="Aula normal">Aula normal</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-door-open icono beige"></i> Número de Aula</label>
+        <input type="text" [(ngModel)]="numeroaula" name="numeroaula" placeholder="Número de Aula" 
+               (change)="cargarHorasOcupadas()" required>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-calendar-alt icono azul"></i> Fecha</label>
+        <input type="date" [(ngModel)]="fecha" name="fecha" required (change)="cargarHorasOcupadas()">
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-clock icono rojo"></i> Hora (1.5 h)</label>
+        <select [(ngModel)]="hora" name="hora" [disabled]="cargando">
+          <option value="">Seleccione una hora</option>
+          <option *ngFor="let h of horasDisponibles" 
+                  [value]="h" 
+                  [disabled]="esHoraDeshabilitada(h)"
+                  [ngClass]="getClaseHora(h)">
+            {{ h }}
+          </option>
+        </select>
+        <small *ngIf="cargando" class="cargando-horas">
+          <i class="fas fa-spinner fa-spin"></i> Cargando disponibilidad...
+        </small>
+      </div>
+
+      <div class="botones-formulario">
+        <button type="button" class="btn-aceptar" (click)="aceptarReservacion()" [disabled]="cargando">
+          <i class="fas fa-check-circle"></i> 
+          {{ cargando ? 'Cargando...' : 'Aceptar' }}
+        </button>
+      </div>
+    </form>
   </div>
 
-    <div class="form-group">
-      <label><i class="fas fa-calendar-alt icono azul"></i> Fecha</label>
-      <input type="date" [(ngModel)]="fecha" name="fecha" required (change)="cargarHorasOcupadas()">
-    </div>
+  <!-- RESUMEN DE RESERVACIÓN - TODOS LOS DATOS EN UN MISMO CONTAINER -->
+  <div *ngIf="resumen && !reservacionConfirmada" class="resumen-reservacion">
+    <div class="resumen-contenido">
+      <h2 class="titulo-form">
+        <i class="fas fa-file-alt"></i>
+        Datos de Reservación
+      </h2>
+      
+      <div class="resumen-header">
+        <div class="logo-placeholder">
+          <i class="fas fa-university"></i>
+        </div>
+        <div class="fecha-hora-emision">
+          <span>Fecha emisión: {{ fechaEmision }}</span>
+          <span>Hora emisión: {{ horaEmision }}</span>
+        </div>
+      </div>
 
-    <!-- Fila 5: Hora (ocupa todo el ancho) -->
-    <div class="form-group full-width">
-      <label><i class="fas fa-clock icono rojo"></i> Hora (1.5 h)</label>
-      <select [(ngModel)]="hora" name="hora">
-        <option value="">Seleccione una hora</option>
-        <option *ngFor="let h of horasDisponibles" [value]="h" [disabled]="horasOcupadas.includes(h)">
-          {{ h }}
-        </option>
-      </select>
-    </div>
+      <!-- TODOS LOS DATOS EN UN SOLO CONTAINER -->
+      <div class="datos-container">
+        <div class="resumen-item" *ngFor="let item of resumenItems">
+          <span class="resumen-label">
+            <i [class]="item.icon + ' icono'"></i> {{item.label}}:
+          </span>
+          <span class="resumen-value">{{item.value}}</span>
+        </div>
+      </div>
 
-    <!-- Botones -->
-    <div class="botones-formulario">
-      <button type="button" class="btn-aceptar" (click)="aceptarReservacion()">
-        <i class="fas fa-check-circle"></i> Aceptar
-      </button>
-    </div>
-  </form>
+      <div class="separador"></div>
 
-  <!-- RESUMEN MEJORADO -->
-  <div *ngIf="resumen" class="resumen-reservacion">
-    <div class="titulo-resumen">
-      <img src="https://img.icons8.com/emoji/48/000000/robot-emoji.png" alt="Logo Bot">
-      <h3>Tu Reservación</h3>
-    </div>
+      <div class="botones-resumen">
+        <button class="btn-confirmar" (click)="confirmarReservacion()" [disabled]="confirmando">
+          <i class="fas fa-check-double"></i> 
+          {{ confirmando ? 'Confirmando...' : 'Confirmar' }}
+        </button>
+        <button class="btn-actualizar" (click)="actualizarReservacion()" [disabled]="confirmando">
+          <i class="fas fa-edit"></i> Actualizar
+        </button>
+        <button class="btn-cancelar" (click)="cancelarReservacion()" [disabled]="confirmando">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
 
-    <div class="info-resumen">
-      <div class="resumen-item">
-        <span class="resumen-label">Nombre:</span>
-        <span class="resumen-value">{{ resumen.nombre }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Nombre de la Carrera:</span>
-        <span class="resumen-value">{{ resumen.nombredelacarrera }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Correo:</span>
-        <span class="resumen-value">{{ resumen.correo }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Añadir Clase y Seccion:</span>
-        <span class="resumen-value">{{ resumen.nuevaClase.join(', ') || 'Ninguno' }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Campus:</span>
-        <span class="resumen-value">{{ resumen.campus }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Sede:</span>
-        <span class="resumen-value">{{ resumen.sede || 'No especificada' }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Tipo de aula:</span>
-        <span class="resumen-value">{{ resumen.tipoAula }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Número de aula:</span>
-        <span class="resumen-value">{{ resumen.numeroaula }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Fecha:</span>
-        <span class="resumen-value">{{ resumen.fecha }}</span>
-      </div>
-      <div class="resumen-item">
-        <span class="resumen-label">Hora:</span>
-        <span class="resumen-value">{{ resumen.hora }} (1.5 h)</span>
+      <!-- Estado de carga durante confirmación -->
+      <div *ngIf="confirmando" class="estado-carga">
+        <div class="spinner"></div>
+        <p>Procesando tu reservación...</p>
       </div>
     </div>
-
-    <div class="separador"></div>
-
-    <div class="botones-resumen">
-      <button class="btn-confirmar" (click)="confirmarReservacion()">
-        <i class="fas fa-check"></i> Confirmar
-      </button>
-      <button class="btn-actualizar" (click)="actualizarReservacion()">
-        <i class="fas fa-sync-alt"></i> Actualizar
-      </button>
-      <button class="btn-cancelar" (click)="cancelarReservacion()">
-        <i class="fas fa-times"></i> Cancelar
-      </button>
-    </div>
-
-    <div *ngIf="qrDataUrl" class="qr-container">
-      <h4>QR de tu reservación:</h4>
-      <img [src]="qrDataUrl" alt="QR">
-    </div>
-  </div>
+  </div> 
 </div>
