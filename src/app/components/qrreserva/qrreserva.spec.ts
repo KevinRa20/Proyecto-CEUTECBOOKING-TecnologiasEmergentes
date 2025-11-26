@@ -13,6 +13,19 @@ describe('Qrreserva', () => {
     .compileComponents();
 
     fixture = TestBed.createComponent(QrreservaComponent);
+import { Qrreserva } from './qrreserva';
+
+describe('Qrreserva', () => {
+  let component: Qrreserva;
+  let fixture: ComponentFixture<Qrreserva>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [Qrreserva]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(Qrreserva);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

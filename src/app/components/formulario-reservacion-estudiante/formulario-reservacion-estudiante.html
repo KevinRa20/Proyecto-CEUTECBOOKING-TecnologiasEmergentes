@@ -3,6 +3,19 @@
   <div *ngIf="reservacionConfirmada" class="confirmacion-exitosa">
     <div class="icono-exito">
       <i class="fas fa-check-circle"></i>
+  <h2 class="titulo-form">Reserva Tu Aula</h2>
+
+  <form *ngIf="!resumen" class="form-grid">
+
+    <!-- Fila 1: Nombre completo y Número de cuenta -->
+    <div class="form-group">
+      <label><i class="fas fa-user icono azul"></i> Nombre completo</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Ingrese su nombre completo" required>
+    </div>
+
+    <div class="form-group">
+      <label><i class="fas fa-id-card icono rojo"></i> Número de cuenta</label>
+      <input type="text" [(ngModel)]="numeroCuenta" name="numeroCuenta" placeholder="Número de cuenta" required>
     </div>
     <h2 class="titulo-confirmacion">¡Reservación Confirmada!</h2>
     <p class="mensaje-confirmacion">Tu reserva se ha completado satisfactoriamente</p>

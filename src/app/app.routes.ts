@@ -4,6 +4,7 @@ import { LoginEstudianteComponent } from './login/login-estudiante';
 import { RegistroEstudianteComponent } from './components/registro/registro-estudiante';
 import { FormularioReservacionEstudianteComponent } from './components/formulario-reservacion-estudiante/formulario-reservacion-estudiante';
 import { FormularioReservacionDocenteComponent } from './components/formulario-reservacion-docente/formulario-reservacion-docente';
+import { FormularioReservacionDocente } from './components/formulario-reservacion-docente/formulario-reservacion-docente';
 import { RegistroDocenteComponent } from './components/registro/registro-docente';
 import { LoginDocenteComponent } from './login/login-docente';
 import { QrreservaComponent } from './components/qrreserva/qrreserva';
@@ -18,4 +19,12 @@ export const routes: Routes = [
   { path: 'formulario-reservacion-docente', component: FormularioReservacionDocenteComponent },
   { path: 'qrreserva', component: QrreservaComponent },
   { path: '**', redirectTo: '' }
+];
+  { path: 'formulario-reservacion-docente', component: FormularioReservacionDocente },
+  { path: 'qrreserva', component: QrreservaComponent },
+  { path: '**', redirectTo: '' }
+];
+  { path: 'formulario-reservacion-docente', component: FormularioReservacionDocente }
+  
+   
 ];

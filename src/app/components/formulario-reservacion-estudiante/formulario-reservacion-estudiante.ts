@@ -59,6 +59,14 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
   campusOpciones = [
     'Unitec Tegucigalpa','Unitec San Pedro Sula','Ceutec Tegucigalpa','Ceutec La Ceiba',
     'Ceutec San Pedro Sula','Universidad Virtual','Unitec Teledocencia','Ceutec Teledocencia'
+    'Ceutec Tegucigalpa',
+    'Ceutec La Ceiba',
+    'Ceutec San Pedro Sula',
+    'Ceutec Teledocencia'
+  ];
+
+  horasDisponibles = [
+   '7:00 AM','8:30 AM','9:00 AM','10:00 AM','11:30 AM','12:30 PM','1:30 PM','2:00 PM','3:00 PM','4:30 PM','5:00 PM','6:00 PM','7:30 PM','8:00 PM','9:00 PM'
   ];
 
   horasDisponibles = ['8:00 AM','9:30 AM','11:00 AM','12:30 PM','2:00 PM','3:30 PM','5:00 PM','6:30 PM','8:00 PM','9:30 PM'];
@@ -341,6 +349,52 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
     } else {
       alert('No hay ID de reservación generado');
     }
+  }
+
+  // Método para probar ambas URLs (normal y con hash)
+  probarAmbasURLs() {
+    if (!this.docId) {
+      alert('No hay ID de reservación');
+      return;
+
+  // Método para probar la ruta (URL con hash)
+  probarRutaQR() {
+    if (this.docId) {
+      const urlQR = `/#/qrreserva?id=${this.docId}`; // ← CON HASH
+      console.log('🔗 Navegando a ruta con hash:', urlQR);
+      window.location.href = urlQR;
+    } else {
+      alert('Primero confirma una reservación');
+    }
+  }
+
+  // Método para verificar URL del QR
+  verificarURLQR() {
+    if (this.docId) {
+      const urlCompleta = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
+      console.log('🔗 URL COMPLETA con hash:', urlCompleta);
+      
+      // Abrir en nueva pestaña para probar
+      window.open(urlCompleta, '_blank');
+      
+      alert(`URL del QR generada:\n${urlCompleta}\n\nSe ha abierto en nueva pestaña.`);
+    } else {
+      alert('No hay ID de reservación generado');
+    }
+
+    const urlNormal = `https://ceutecbooking-980dd.web.app/qrreserva?id=${this.docId}`;
+    const urlConHash = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
+    
+    console.log('🔗 URL Normal:', urlNormal);
+    console.log('🔗 URL con Hash:', urlConHash);
+    
+    // Abrir ambas para probar
+    window.open(urlNormal, 'url_normal');
+    setTimeout(() => {
+      window.open(urlConHash, 'url_hash');
+    }, 500);
+    
+    alert(`Probando ambas URLs:\n\n• Normal: ${urlNormal}\n• Con Hash: ${urlConHash}\n\nSe abrirán en pestañas separadas.`);
   }
 
   // Método para probar ambas URLs (normal y con hash)
