@@ -356,6 +356,52 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
     if (!this.docId) {
       alert('No hay ID de reservación');
       return;
+
+  // Método para probar la ruta (URL con hash)
+  probarRutaQR() {
+    if (this.docId) {
+      const urlQR = `/#/qrreserva?id=${this.docId}`; // ← CON HASH
+      console.log('🔗 Navegando a ruta con hash:', urlQR);
+      window.location.href = urlQR;
+    } else {
+      alert('Primero confirma una reservación');
+    }
+  }
+
+  // Método para verificar URL del QR
+  verificarURLQR() {
+    if (this.docId) {
+      const urlCompleta = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
+      console.log('🔗 URL COMPLETA con hash:', urlCompleta);
+      
+      // Abrir en nueva pestaña para probar
+      window.open(urlCompleta, '_blank');
+      
+      alert(`URL del QR generada:\n${urlCompleta}\n\nSe ha abierto en nueva pestaña.`);
+    } else {
+      alert('No hay ID de reservación generado');
+    }
+
+    const urlNormal = `https://ceutecbooking-980dd.web.app/qrreserva?id=${this.docId}`;
+    const urlConHash = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
+    
+    console.log('🔗 URL Normal:', urlNormal);
+    console.log('🔗 URL con Hash:', urlConHash);
+    
+    // Abrir ambas para probar
+    window.open(urlNormal, 'url_normal');
+    setTimeout(() => {
+      window.open(urlConHash, 'url_hash');
+    }, 500);
+    
+    alert(`Probando ambas URLs:\n\n• Normal: ${urlNormal}\n• Con Hash: ${urlConHash}\n\nSe abrirán en pestañas separadas.`);
+  }
+
+  // Método para probar ambas URLs (normal y con hash)
+  probarAmbasURLs() {
+    if (!this.docId) {
+      alert('No hay ID de reservación');
+      return;
     }
 
     const urlNormal = `https://ceutecbooking-980dd.web.app/qrreserva?id=${this.docId}`;
