@@ -1,3 +1,17 @@
+<div class="contenedor">
+  <div class="tarjeta">
+    <h2>Login Docente</h2>
+    <form (ngSubmit)="login()">
+      <label>Correo</label>
+      <input type="email" [(ngModel)]="correo" name="correo" required>
+
+      <label>Contraseña</label>
+      <input type="password" [(ngModel)]="contrasena" name="contrasena" required>
+
+      <button type="submit">Ingresar</button>
+    </form>
+  </div>
+</div>
 <div class="fondo">
   <div class="overlay"></div>
   <div class="tarjeta">
