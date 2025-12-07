@@ -12,6 +12,7 @@ export class AuthService {
 
   constructor() {
     const app = initializeApp(firebaseConfig); // Inicializa Firebase solo con Firestore
+    const app = initializeApp(firebaseConfig);
     this.db = getFirestore(app);
   }
 
@@ -28,6 +29,26 @@ export class AuthService {
       return !snapshot.empty; // true si existe coincidencia
     } catch (error) {
       console.error('Error login:', error);
+      return !snapshot.empty;
+    } catch (error) {
+      console.error('Error login estudiante:', error);
+      return false;
+    }
+  }
+
+  // ✅ CORRECCIÓN: Nombre del método corregido (loginDocente en lugar de logindocente)
+  async loginDocente(correo: string, contrasena: string): Promise<boolean> {
+    try {
+      const docentesRef = collection(this.db, 'docentes');
+      const q = query(
+        docentesRef,
+        where('correo', '==', correo),
+        where('contrasena', '==', contrasena)
+      );
+      const snapshot = await getDocs(q);
+      return !snapshot.empty;
+    } catch (error) {
+      console.error('Error login docente:', error);
       return false;
     }
   }
@@ -41,6 +62,36 @@ export class AuthService {
     } catch (error) {
       console.error('Error registro:', error);
       throw error;
+    }
+  }
+}
+      const docRef = doc(estudiantesRef);
+      await setDoc(docRef, { 
+        nombre, 
+        correo, 
+        contrasena,
+        fechaRegistro: new Date() 
+      });
+    } catch (error) {
+      console.error('Error registro estudiante:', error);
+      throw new Error('No se pudo registrar el estudiante');
+    }
+  }
+
+  // REGISTRO: agrega un nuevo docente
+  async registrarDocente(nombre: string, correo: string, contrasena: string): Promise<void> {
+    try {
+      const docentesRef = collection(this.db, 'docentes');
+      const docRef = doc(docentesRef);
+      await setDoc(docRef, { 
+        nombre, 
+        correo, 
+        contrasena,
+        fechaRegistro: new Date() 
+      });
+    } catch (error) {
+      console.error('Error registro docente:', error);
+      throw new Error('No se pudo registrar el docente');
     }
   }
 }

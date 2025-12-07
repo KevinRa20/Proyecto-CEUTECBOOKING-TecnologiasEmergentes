@@ -1,0 +1,301 @@
+.contenedor-qrreserva {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e1f0ff 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 25px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e1f0ff;
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.logo-imagen {
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.header h1 {
+  color: #004aad;
+  margin: 0 0 10px 0;
+  font-size: 2.5em;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.subtitulo {
+  color: #666;
+  margin: 5px 0;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+/* Información de emisión - MOVIDA ARRIBA */
+.informacion-emision {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #fff8e1;
+  border-radius: 10px;
+  border: 2px solid #ff9800;
+}
+
+.campo-emision {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.campo-emision label {
+  font-weight: 600;
+  color: #e65100;
+  font-size: 0.9em;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.campo-emision span {
+  color: #333;
+  font-weight: 600;
+  font-size: 1em;
+}
+
+/* Estado verificado */
+.estado-verificado {
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 25px;
+  background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%);
+  border-radius: 12px;
+  border: 3px solid #4caf50;
+}
+
+.estado-verificado i {
+  font-size: 50px;
+  color: #4caf50;
+  margin-bottom: 15px;
+}
+
+.estado-verificado h2 {
+  color: #4caf50;
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Información de la reservación */
+.informacion-reserva {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+  border: 1px solid #e1f0ff;
+}
+
+.informacion-reserva h3 {
+  color: #004aad;
+  margin: 0 0 25px 0;
+  font-size: 1.3em;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 2px solid #004aad;
+  padding-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.campo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.campo:last-child {
+  border-bottom: none;
+}
+
+.campo.full-width {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.campo label {
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  font-size: 0.95em;
+}
+
+.campo span {
+  color: #555;
+  flex: 2;
+  text-align: right;
+  font-weight: 500;
+  font-size: 0.95em;
+}
+
+.lista-estudiantes {
+  line-height: 1.4;
+  text-align: left;
+  width: 100%;
+}
+
+/* Mensaje de presentación - SIMPLIFICADO */
+.mensaje-presentacion {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 25px;
+  background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+  border-radius: 10px;
+  border: 3px solid #ff9800;
+  margin-bottom: 25px;
+}
+
+.mensaje-presentacion i {
+  font-size: 40px;
+  color: #ff9800;
+  flex-shrink: 0;
+}
+
+.texto-mensaje h4 {
+  color: #e65100;
+  margin: 0;
+  font-size: 1.1em;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+}
+
+/* Estados de error */
+.estado-error {
+  text-align: center;
+}
+
+.tarjeta-error {
+  background: white;
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e53935;
+}
+
+.tarjeta-error i {
+  font-size: 60px;
+  color: #e53935;
+  margin-bottom: 20px;
+}
+
+.tarjeta-error h2 {
+  color: #e53935;
+  margin: 0 0 15px 0;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.tarjeta-error p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Estado de carga */
+.estado-carga {
+  text-align: center;
+  padding: 60px 40px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #004aad;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 25px;
+}
+
+.estado-carga p {
+  color: #004aad;
+  font-weight: 600;
+  margin: 0;
+  font-size: 1.1em;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contenedor-qrreserva {
+    padding: 15px;
+  }
+  
+  .header {
+    padding: 20px 15px;
+  }
+  
+  .logo-imagen {
+    width: 120px;
+  }
+  
+  .header h1 {
+    font-size: 2em;
+  }
+  
+  .campo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .campo span {
+    text-align: left;
+    width: 100%;
+  }
+  
+  .informacion-emision {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .mensaje-presentacion {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .texto-mensaje h4 {
+    font-size: 1em;
+  }
+}
