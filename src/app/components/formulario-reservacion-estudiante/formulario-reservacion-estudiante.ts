@@ -164,7 +164,7 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
         this.docId = docRef.id; 
       }
 
-      // GENERAR QR CON URL CON HASH
+      // GENERAR QR CON URL CON HASH (ESTE ESTÁ BIEN PARA ESTUDIANTE)
       await this.generarQRConURL();
       
       this.reservacionConfirmada = true;
@@ -179,7 +179,7 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
     }
   }
 
-  // MÉTODO CORREGIDO: GENERAR QR CON URL CON HASH
+  // MÉTODO CORREGIDO: GENERAR QR CON URL CON HASH PARA ESTUDIANTE
   private async generarQRConURL(): Promise<void> {
     if (!this.resumen || !this.docId) return;
 
@@ -188,11 +188,11 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
     this.errorQR = false;
 
     try {
-      console.log('Iniciando generación de QR con URL con hash...');
+      console.log('Iniciando generación de QR con URL con hash para ESTUDIANTE...');
       
-      // URL CON HASH - CORREGIDO
+      // URL PARA ESTUDIANTE (ESTE ESTÁ BIEN)
       const qrURL = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
-      console.log('URL con hash para QR:', qrURL);
+      console.log('URL con hash para QR ESTUDIANTE:', qrURL);
 
       // Intentar cargar QRCode
       let QRCode: any;
@@ -217,7 +217,7 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
         errorCorrectionLevel: 'M'
       });
 
-      console.log('QR con URL hash generado exitosamente');
+      console.log('QR con URL hash para ESTUDIANTE generado exitosamente');
       
     } catch (error) {
       console.error('Error crítico generando QR:', error);
@@ -317,33 +317,33 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
     }
   }
 
-  // Método para probar la ruta (URL con hash)
+  // Método para probar la ruta (URL con hash) - PARA ESTUDIANTE
   probarRutaQR() {
     if (this.docId) {
-      const urlQR = `/#/qrreserva?id=${this.docId}`; // ← CON HASH
-      console.log('🔗 Navegando a ruta con hash:', urlQR);
+      const urlQR = `/#/qrreserva?id=${this.docId}`; // ← CON HASH PARA ESTUDIANTE
+      console.log('🔗 Navegando a ruta con hash para ESTUDIANTE:', urlQR);
       window.location.href = urlQR;
     } else {
       alert('Primero confirma una reservación');
     }
   }
 
-  // Método para verificar URL del QR
+  // Método para verificar URL del QR - PARA ESTUDIANTE
   verificarURLQR() {
     if (this.docId) {
       const urlCompleta = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
-      console.log('🔗 URL COMPLETA con hash:', urlCompleta);
+      console.log('🔗 URL COMPLETA con hash para ESTUDIANTE:', urlCompleta);
       
       // Abrir en nueva pestaña para probar
       window.open(urlCompleta, '_blank');
       
-      alert(`URL del QR generada:\n${urlCompleta}\n\nSe ha abierto en nueva pestaña.`);
+      alert(`URL del QR generada (ESTUDIANTE):\n${urlCompleta}\n\nSe ha abierto en nueva pestaña.`);
     } else {
       alert('No hay ID de reservación generado');
     }
   }
 
-  // Método para probar ambas URLs (normal y con hash)
+  // Método para probar ambas URLs (normal y con hash) - PARA ESTUDIANTE
   probarAmbasURLs() {
     if (!this.docId) {
       alert('No hay ID de reservación');
@@ -353,8 +353,8 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
     const urlNormal = `https://ceutecbooking-980dd.web.app/qrreserva?id=${this.docId}`;
     const urlConHash = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
     
-    console.log('🔗 URL Normal:', urlNormal);
-    console.log('🔗 URL con Hash:', urlConHash);
+    console.log('🔗 URL Normal para ESTUDIANTE:', urlNormal);
+    console.log('🔗 URL con Hash para ESTUDIANTE:', urlConHash);
     
     // Abrir ambas para probar
     window.open(urlNormal, 'url_normal');
@@ -362,7 +362,7 @@ export class FormularioReservacionEstudianteComponent implements OnInit {
       window.open(urlConHash, 'url_hash');
     }, 500);
     
-    alert(`Probando ambas URLs:\n\n• Normal: ${urlNormal}\n• Con Hash: ${urlConHash}\n\nSe abrirán en pestañas separadas.`);
+    alert(`Probando ambas URLs (ESTUDIANTE):\n\n• Normal: ${urlNormal}\n• Con Hash: ${urlConHash}\n\nSe abrirán en pestañas separadas.`);
   }
 
   private limpiarFormulario() {

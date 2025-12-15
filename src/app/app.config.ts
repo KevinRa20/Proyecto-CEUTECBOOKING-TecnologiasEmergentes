@@ -1,9 +1,10 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { routes } from './app.routes';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAsQ0nZ8PyNgAS-5aLddzpeNWex-Optqyo",
@@ -16,9 +17,13 @@ export const firebaseConfig = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes,withHashLocation()),
+    provideRouter(routes, withHashLocation()),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ]
-}
+};

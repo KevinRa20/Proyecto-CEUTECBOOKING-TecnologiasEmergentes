@@ -22,7 +22,7 @@
       <!-- QR Generado Simple -->
       <div *ngIf="!generandoQR && qrDataUrl" class="qr-simple">
         <img [src]="qrDataUrl" 
-             alt="Código QR de reservación" 
+             alt="Código QR de reservación docente" 
              class="qr-image-simple"
              (load)="onQRLoaded()"
              (error)="onQRError()">
@@ -39,43 +39,42 @@
   <div *ngIf="!resumen && !reservacionConfirmada">
     <h2 class="titulo-form">
       <i class="fas fa-calendar-check"></i>
-      Formulario de Reservación
+      Formulario de Reservación Docente
     </h2>
 
     <form class="form-grid">
+      <!-- NOMBRE COMPLETO -->
       <div class="form-group">
         <label><i class="fas fa-user icono azul"></i> Nombre completo</label>
         <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Ingrese su nombre completo" required>
       </div>
 
+      <!-- NÚMERO DE EMPLEADO -->
       <div class="form-group">
-        <label><i class="fas fa-user-tie icono rojo"></i> Nombre de la Carrera</label>
-        <input type="text" [(ngModel)]="nombreCarrera" name="nombreCarrera" placeholder="Nombre de la Carrera" required>
+        <label><i class="fas fa-id-card icono rojo"></i> Número de Empleado</label>
+        <input type="text" [(ngModel)]="numeroempleado" name="numeroempleado" 
+               placeholder="Número de empleado" required>
       </div>
 
+      <!-- CORREO EDUCATIVO -->
       <div class="form-group">
         <label><i class="fas fa-envelope icono azul"></i> Correo educativo</label>
-        <input type="email" [(ngModel)]="correo" name="correo" placeholder="ejemplo@dominio.edu" required>
+        <input type="email" [(ngModel)]="correo" name="correo" placeholder="ejemplo@ceutec.edu" required>
       </div>
 
+      <!-- CLASE -->
       <div class="form-group">
-        <label><i class="fas fa-user-friends icono beige"></i> Añadir Clase y Seccion </label>
-        <div class="agregar-container">
-          <input #nuevaclase type="text" placeholder="Nombre de la clase y seccion" class="input-agregar">
-          <button type="button" class="btn-agregar" (click)="agregarclase(nuevaclase.value); nuevaclase.value=''">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-        <ul class="lista-clases">
-          <li *ngFor="let cls of otraclase; let i = index" class="clase-item">
-            <span>{{ cls }}</span>
-            <button type="button" class="btn-eliminar" (click)="eliminarclase(i)">
-              <i class="fas fa-times"></i>
-            </button>
-          </li>
-        </ul>
+        <label><i class="fas fa-graduation-cap icono beige"></i> Clase</label>
+        <input type="text" [(ngModel)]="clase" name="clase" placeholder="Nombre de la clase" required>
       </div>
 
+      <!-- SECCIÓN -->
+      <div class="form-group">
+        <label><i class="fas fa-graduation-cap icono azul"></i> Sección</label>
+        <input type="text" [(ngModel)]="seccion" name="seccion" placeholder="Sección" required>
+      </div>
+
+      <!-- CAMPUS -->
       <div class="form-group">
         <label><i class="fas fa-university icono azul"></i> Campus</label>
         <select [(ngModel)]="campus" name="campus" (change)="cargarHorasOcupadas()">
@@ -84,14 +83,16 @@
         </select>
       </div>
 
+      <!-- SEDE -->
       <div class="form-group">
         <label><i class="fas fa-map-marker-alt icono rojo"></i> Sede</label>
         <input type="text" [(ngModel)]="sede" name="sede" placeholder="Sede de la reservación">
       </div>
 
+      <!-- TIPO DE AULA -->
       <div class="form-group">
         <label><i class="fas fa-chalkboard icono beige"></i> Tipo de aula</label>
-        <select [(ngModel)]="tipoAula" name="tipoAula" (change)="cargarHorasOcupadas()">
+        <select [(ngModel)]="tipoaula" name="tipoaula" (change)="cargarHorasOcupadas()">
           <option value="">Seleccione tipo de aula</option>
           <option value="Salón de estudio">Salón de estudio</option>
           <option value="Laboratorio">Laboratorio</option>
@@ -100,17 +101,20 @@
         </select>
       </div>
 
+      <!-- NÚMERO DE AULA -->
       <div class="form-group">
         <label><i class="fas fa-door-open icono beige"></i> Número de Aula</label>
         <input type="text" [(ngModel)]="numeroaula" name="numeroaula" placeholder="Número de Aula" 
                (change)="cargarHorasOcupadas()" required>
       </div>
 
+      <!-- FECHA -->
       <div class="form-group">
         <label><i class="fas fa-calendar-alt icono azul"></i> Fecha</label>
         <input type="date" [(ngModel)]="fecha" name="fecha" required (change)="cargarHorasOcupadas()">
       </div>
 
+      <!-- HORA -->
       <div class="form-group">
         <label><i class="fas fa-clock icono rojo"></i> Hora (1.5 h)</label>
         <select [(ngModel)]="hora" name="hora" [disabled]="cargando">
@@ -136,12 +140,12 @@
     </form>
   </div>
 
-  <!-- RESUMEN DE RESERVACIÓN - TODOS LOS DATOS EN UN MISMO CONTAINER -->
+  <!-- RESUMEN DE RESERVACIÓN -->
   <div *ngIf="resumen && !reservacionConfirmada" class="resumen-reservacion">
     <div class="resumen-contenido">
       <h2 class="titulo-form">
         <i class="fas fa-file-alt"></i>
-        Datos de Reservación
+        Datos de Reservación Docente
       </h2>
       
       <div class="resumen-header">
@@ -158,7 +162,7 @@
       <div class="datos-container">
         <div class="resumen-item" *ngFor="let item of resumenItems">
           <span class="resumen-label">
-            <i [class]="item.icon + ' icono'"></i> {{item.label}}:
+            <i [class]="item.icon"></i> {{item.label}}:
           </span>
           <span class="resumen-value">{{item.value}}</span>
         </div>

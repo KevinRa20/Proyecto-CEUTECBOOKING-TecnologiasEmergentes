@@ -1,27 +1,12 @@
-/* Foco visible para botones */
-.btn-volver:focus,
-button:focus {
-  outline: 3px solid #ff9800;
-  outline-offset: 2px;
-}
-
-/* Iconos decorativos ocultos a lectores de pantalla */
-.estado-verificado i,
-.tarjeta-error i,
-.mensaje-presentacion i {
-  aria-hidden: true;
-}
-
 .contenedor-qrreserva {
   max-width: 700px;
   margin: 0 auto;
   padding: 20px;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #e1f0ff 100%);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e8f4fd 100%);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Header */
 .header {
   text-align: center;
   margin-bottom: 30px;
@@ -29,7 +14,7 @@ button:focus {
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border: 2px solid #e1f0ff;
+  border: 2px solid #2c5282;
 }
 
 .logo {
@@ -43,7 +28,7 @@ button:focus {
 }
 
 .header h1 {
-  color: #004aad;
+  color: #2c5282;
   margin: 0 0 10px 0;
   font-size: 2.5em;
   font-weight: 700;
@@ -51,22 +36,21 @@ button:focus {
 }
 
 .subtitulo {
-  color: #666;
+  color: #4a5568;
   margin: 5px 0;
   font-size: 1.3em;
   font-weight: 600;
 }
 
-/* Información de emisión - MOVIDA ARRIBA */
 .informacion-emision {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   margin-bottom: 25px;
   padding: 20px;
-  background: #fff8e1;
+  background: #ebf8ff;
   border-radius: 10px;
-  border: 2px solid #ff9800;
+  border: 2px solid #3182ce;
 }
 
 .campo-emision {
@@ -77,7 +61,7 @@ button:focus {
 
 .campo-emision label {
   font-weight: 600;
-  color: #e65100;
+  color: #2c5282;
   font-size: 0.9em;
   margin-bottom: 5px;
   text-transform: uppercase;
@@ -85,52 +69,50 @@ button:focus {
 }
 
 .campo-emision span {
-  color: #333;
+  color: #2d3748;
   font-weight: 600;
   font-size: 1em;
 }
 
-/* Estado verificado */
 .estado-verificado {
   text-align: center;
   margin-bottom: 25px;
   padding: 25px;
-  background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%);
+  background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
   border-radius: 12px;
-  border: 3px solid #4caf50;
+  border: 3px solid #38a169;
 }
 
 .estado-verificado i {
   font-size: 50px;
-  color: #4caf50;
+  color: #38a169;
   margin-bottom: 15px;
 }
 
 .estado-verificado h2 {
-  color: #4caf50;
+  color: #276749;
   margin: 0;
   font-size: 1.5em;
   font-weight: 700;
   text-transform: uppercase;
 }
 
-/* Información de la reservación */
 .informacion-reserva {
   background: white;
   border-radius: 12px;
   padding: 30px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-bottom: 25px;
-  border: 1px solid #e1f0ff;
+  border: 1px solid #cbd5e0;
 }
 
 .informacion-reserva h3 {
-  color: #004aad;
+  color: black;
   margin: 0 0 25px 0;
   font-size: 1.3em;
   font-weight: 600;
   text-align: center;
-  border-bottom: 2px solid #004aad;
+  border-bottom: 2px solid #2c5282;
   padding-bottom: 15px;
   text-transform: uppercase;
 }
@@ -140,22 +122,16 @@ button:focus {
   justify-content: space-between;
   align-items: center;
   padding: 14px 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .campo:last-child {
   border-bottom: none;
 }
 
-.campo.full-width {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
 .campo label {
   font-weight: 600;
-  color: #333;
+  color: black;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -163,40 +139,44 @@ button:focus {
   font-size: 0.95em;
 }
 
+.campo label i.fa-user { color: #2c5282; }
+.campo label i.fa-id-card { color: #e53e3e; }
+.campo label i.fa-envelope { color: #3182ce; }
+.campo label i.fa-graduation-cap { color: #38a169; }
+.campo label i.fa-university { color: #2c5282; }
+.campo label i.fa-map-marker-alt { color: #e53e3e; }
+.campo label i.fa-chalkboard { color: #d69e2e; }
+.campo label i.fa-door-open { color: #d69e2e; }
+.campo label i.fa-calendar-alt { color: #2c5282; }
+.campo label i.fa-clock { color: #e53e3e; }
+
 .campo span {
-  color: #555;
+  color: black;
   flex: 2;
   text-align: right;
   font-weight: 500;
   font-size: 0.95em;
 }
 
-.lista-estudiantes {
-  line-height: 1.4;
-  text-align: left;
-  width: 100%;
-}
-
-/* Mensaje de presentación - SIMPLIFICADO */
 .mensaje-presentacion {
   display: flex;
   align-items: center;
   gap: 20px;
   padding: 25px;
-  background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+  background: linear-gradient(135deg, #feebc8 0%, #fbd38d 100%);
   border-radius: 10px;
-  border: 3px solid #ff9800;
+  border: 3px solid #d69e2e;
   margin-bottom: 25px;
 }
 
 .mensaje-presentacion i {
   font-size: 40px;
-  color: #ff9800;
+  color: #d69e2e;
   flex-shrink: 0;
 }
 
 .texto-mensaje h4 {
-  color: #e65100;
+  color: #b7791f;
   margin: 0;
   font-size: 1.1em;
   font-weight: 700;
@@ -206,7 +186,6 @@ button:focus {
   line-height: 1.4;
 }
 
-/* Estados de error */
 .estado-error {
   text-align: center;
 }
@@ -216,29 +195,32 @@ button:focus {
   border-radius: 12px;
   padding: 40px 30px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border: 2px solid #e53935;
+  border: 2px solid #e53e3e;
 }
 
 .tarjeta-error i {
   font-size: 60px;
-  color: #e53935;
+  color: #e53e3e;
   margin-bottom: 20px;
 }
 
 .tarjeta-error h2 {
-  color: #e53935;
+  color: #e53e3e;
   margin: 0 0 15px 0;
   font-size: 1.5em;
   font-weight: 600;
 }
 
 .tarjeta-error p {
-  color: #666;
+  color: #4a5568;
   line-height: 1.6;
   margin-bottom: 10px;
 }
 
-/* Estado de carga */
+.tarjeta-error strong {
+  color: #2c5282;
+}
+
 .estado-carga {
   text-align: center;
   padding: 60px 40px;
@@ -249,7 +231,7 @@ button:focus {
 
 .spinner {
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #004aad;
+  border-top: 5px solid #2c5282;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -258,7 +240,7 @@ button:focus {
 }
 
 .estado-carga p {
-  color: #004aad;
+  color: #2c5282;
   font-weight: 600;
   margin: 0;
   font-size: 1.1em;
@@ -269,7 +251,31 @@ button:focus {
   100% { transform: rotate(360deg); }
 }
 
-/* Responsive */
+.btn-volver {
+  display: inline-block;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #2c5282 0%, #1a365d 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.btn-volver:hover {
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(44, 82, 130, 0.3);
+}
+
+.btn-volver i {
+  margin-right: 10px;
+}
+
 @media (max-width: 768px) {
   .contenedor-qrreserva {
     padding: 15px;
@@ -311,5 +317,10 @@ button:focus {
   
   .texto-mensaje h4 {
     font-size: 1em;
+  }
+  
+  .btn-volver {
+    width: 100%;
+    padding: 12px;
   }
 }

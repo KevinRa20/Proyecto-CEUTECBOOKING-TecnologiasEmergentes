@@ -34,7 +34,7 @@ body, html {
   justify-content: center;
   gap: 12px;
   margin-bottom: 20px;
-  flex-wrap: wrap; /* ✅ Para ajustar en pantallas pequeñas */
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -60,7 +60,7 @@ body, html {
 
 .titulo p {
   font-size: 14px;
-  color: #333;
+  color: #222; /* mejor contraste */
   margin-top: 5px;
 }
 
@@ -71,7 +71,7 @@ body, html {
 }
 
 .contenido p {
-  color: #333;
+  color: #222; /* mejor contraste */
   margin-bottom: 25px;
 }
 
@@ -114,11 +114,16 @@ body, html {
   opacity: 0.9;
 }
 
+.btn:focus {
+  outline: 3px solid #ff9800;
+  outline-offset: 2px;
+}
+
 .btn i {
   font-size: 18px;
 }
 
-/* ✅ Responsive ajustes */
+/* Responsive */
 @media (max-width: 600px) {
   .tarjeta {
     padding: 25px;

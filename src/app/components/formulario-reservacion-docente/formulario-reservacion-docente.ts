@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Firestore, collection, addDoc, doc, setDoc, deleteDoc, getDocs, query, where } from '@angular/fire/firestore';
 
-interface Reservacion {
+interface ReservacionDocente {
   nombre: string;
-  nombreCarrera: string;
+  numeroempleado: string;
   correo: string;
-  otraclase: string[];
+  clase: string;
+  seccion: string;
   campus: string;
   sede: string;
-  tipoAula: string;
+  tipoaula: string;
   numeroaula: string;
   fecha: string;
   hora: string;
@@ -24,21 +25,21 @@ interface Reservacion {
   styleUrls: ['./formulario-reservacion-docente.css']
 })
 export class FormularioReservacionDocenteComponent implements OnInit {
-   clase: any[] = [];
   // Variables del formulario
   nombre = '';
-  nombreCarrera = '';
+  numeroempleado = '';
   correo = '';
-  otraclase: string[] = [];
+  clase = '';
+  seccion = '';
   campus = '';
   sede = '';
-  tipoAula = '';
+  tipoaula = '';
   numeroaula = '';
   fecha = '';
   hora = '';
-  
+
   // Variables de estado
-  resumen: Reservacion | null = null;
+  resumen: ReservacionDocente | null = null;
   qrDataUrl = '';
   docId: string | null = null;
   cargando = false;
@@ -58,44 +59,33 @@ export class FormularioReservacionDocenteComponent implements OnInit {
 
   // Opciones del formulario
   campusOpciones = [
-    'Unitec Tegucigalpa','Unitec San Pedro Sula','Ceutec Tegucigalpa','Ceutec La Ceiba',
-    'Ceutec San Pedro Sula','Universidad Virtual','Unitec Teledocencia','Ceutec Teledocencia'
+    'Unitec Tegucigalpa', 'Unitec San Pedro Sula', 'Ceutec Tegucigalpa', 'Ceutec La Ceiba',
+    'Ceutec San Pedro Sula', 'Universidad Virtual', 'Unitec Teledocencia', 'Ceutec Teledocencia'
   ];
 
-  horasDisponibles = ['8:00 AM','9:30 AM','11:00 AM','12:30 PM','2:00 PM','3:30 PM','5:00 PM','6:30 PM','8:00 PM','9:30 PM'];
+  horasDisponibles = ['8:00 AM', '9:30 AM', '11:00 AM', '12:30 PM', '2:00 PM', '3:30 PM', '5:00 PM', '6:30 PM', '8:00 PM', '9:30 PM'];
   horasOcupadas: string[] = [];
 
-  ngOnInit() {}
-
-  agregarclase(clase: string) { 
-    const nombreLimpio = clase.trim();
-    if(nombreLimpio && !this.otraclase.includes(nombreLimpio)) {
-      this.otraclase.push(nombreLimpio);
-    }
-  }
-
-  eliminarclase(index: number) {
-    this.otraclase.splice(index, 1);
-  }
+  ngOnInit() { }
 
   async cargarHorasOcupadas() {
-    if(!this.fecha || !this.campus || !this.tipoAula || !this.numeroaula) {
+    if (!this.fecha || !this.campus || !this.tipoaula || !this.numeroaula) {
       this.horasOcupadas = [];
       return;
     }
-    
+
     this.cargando = true;
     try {
-      const reservasRef = collection(this.firestore, 'reservas');
+      const reservasRef = collection(this.firestore, 'reservas-docentes');
       const q = query(
-        reservasRef, 
-        where('campus','==',this.campus), 
-        where('tipoAula','==',this.tipoAula), 
-        where('numeroaula','==',this.numeroaula), 
-        where('fecha','==',this.fecha)
+        reservasRef,
+        where('campus', '==', this.campus),
+        where('tipoaula', '==', this.tipoaula),
+        where('numeroaula', '==', this.numeroaula),
+        where('fecha', '==', this.fecha)
       );
       const snapshot = await getDocs(q);
-      this.horasOcupadas = snapshot.docs.map(doc => (doc.data() as { hora:string }).hora);
+      this.horasOcupadas = snapshot.docs.map(doc => (doc.data() as { hora: string }).hora);
     } catch (error) {
       console.error('Error cargando horas ocupadas:', error);
       this.horasOcupadas = [];
@@ -105,82 +95,79 @@ export class FormularioReservacionDocenteComponent implements OnInit {
   }
 
   aceptarReservacion() {
-    if(!this.nombre || !this.nombreCarrera || !this.correo){ 
-      alert('Complete campos obligatorios'); 
-      return; 
+    if (!this.nombre || !this.numeroempleado || !this.correo) {
+      alert('Complete campos obligatorios');
+      return;
     }
-    
+
     const correoRegex = /^[^\s@]+@[^\s@]+\.edu(\.[a-z]{2,})?$/i;
-    if(!correoRegex.test(this.correo)){ 
-      alert('Correo debe ser educativo'); 
-      return; 
+    if (!correoRegex.test(this.correo)) {
+      alert('Correo debe ser educativo');
+      return;
     }
-    
-    if(!this.hora) {
+
+    if (!this.hora) {
       alert('Seleccione una hora');
       return;
     }
 
-    if(this.horasOcupadas.includes(this.hora)) {
+    if (this.horasOcupadas.includes(this.hora)) {
       alert('La hora seleccionada no está disponible. Por favor seleccione otra hora.');
       return;
     }
 
-    this.resumen = { 
-      nombre: this.nombre, 
-      nombreCarrera: this.nombreCarrera, 
-      correo: this.correo, 
-      otraclase: [...this.otraclase], 
-      campus: this.campus, 
-      sede: this.sede, 
-      tipoAula: this.tipoAula, 
-      numeroaula: this.numeroaula, 
-      fecha: this.fecha, 
-      hora: this.hora 
+    this.resumen = {
+      nombre: this.nombre,
+      numeroempleado: this.numeroempleado,
+      correo: this.correo,
+      clase: this.clase,
+      seccion: this.seccion,
+      campus: this.campus,
+      sede: this.sede,
+      tipoaula: this.tipoaula,
+      numeroaula: this.numeroaula,
+      fecha: this.fecha,
+      hora: this.hora
     };
   }
 
   async confirmarReservacion() {
-    if(!this.resumen) return;
-    
+    if (!this.resumen) return;
+
     this.confirmando = true;
     this.errorQR = false;
-    
+
     try {
-      // Verificar disponibilidad
       await this.cargarHorasOcupadas();
-      
-      if(this.horasOcupadas.includes(this.resumen.hora)) {
+
+      if (this.horasOcupadas.includes(this.resumen.hora)) {
         alert('La hora seleccionada ya no está disponible. Por favor seleccione otra hora.');
         this.actualizarReservacion();
         return;
       }
 
-      // Guardar en Firestore
-      const reservasRef = collection(this.firestore,'reservas');
-      if(this.docId){ 
-        await setDoc(doc(this.firestore,'reservas',this.docId), this.resumen); 
-      } else { 
-        const docRef = await addDoc(reservasRef, this.resumen); 
-        this.docId = docRef.id; 
+      const reservasRef = collection(this.firestore, 'reservas-docentes');
+      if (this.docId) {
+        await setDoc(doc(this.firestore, 'reservas-docentes', this.docId), this.resumen);
+      } else {
+        const docRef = await addDoc(reservasRef, this.resumen);
+        this.docId = docRef.id;
       }
 
-      // GENERAR QR CON URL CON HASH
       await this.generarQRConURL();
-      
+
       this.reservacionConfirmada = true;
       this.qrGenerado = true;
-      
-    } catch(e){ 
-      console.error('Error al confirmar:', e); 
-      alert('Error al confirmar la reservación'); 
+
+    } catch (e) {
+      console.error('Error al confirmar:', e);
+      alert('Error al confirmar la reservación');
       this.errorQR = true;
     } finally {
       this.confirmando = false;
     }
   }
 
-  // MÉTODO CORREGIDO: GENERAR QR CON URL CON HASH
   private async generarQRConURL(): Promise<void> {
     if (!this.resumen || !this.docId) return;
 
@@ -189,39 +176,25 @@ export class FormularioReservacionDocenteComponent implements OnInit {
     this.errorQR = false;
 
     try {
-      console.log('Iniciando generación de QR con URL con hash...');
-      
-      // URL CON HASH - CORREGIDO
-      const qrURL = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
-      console.log('URL con hash para QR:', qrURL);
+      const qrURL = `https://ceutecbooking-980dd.web.app/#/qrreserva-docente?id=${this.docId}`;
 
-      // Intentar cargar QRCode
       let QRCode: any;
-      
       try {
         const QRCodeModule = await import('qrcode');
         QRCode = QRCodeModule.default || QRCodeModule;
-        console.log('QRCode cargado via import dinámico');
       } catch (importError) {
-        console.warn('Error en import dinámico, intentando método alternativo...', importError);
         throw new Error('No se pudo cargar la librería QRCode');
       }
 
-      // Generar QR con la URL CON HASH
       this.qrDataUrl = await QRCode.toDataURL(qrURL, {
         width: 200,
         margin: 1,
-        color: {
-          dark: '#000000',
-          light: '#FFFFFF'
-        },
+        color: { dark: '#000000', light: '#FFFFFF' },
         errorCorrectionLevel: 'M'
       });
 
-      console.log('QR con URL hash generado exitosamente');
-      
     } catch (error) {
-      console.error('Error crítico generando QR:', error);
+      console.error('Error generando QR:', error);
       this.errorQR = true;
       this.generarQRRespaldoSimple();
     } finally {
@@ -229,37 +202,33 @@ export class FormularioReservacionDocenteComponent implements OnInit {
     }
   }
 
-  // GENERAR QR DE RESpaldo SIMPLE
   private generarQRRespaldoSimple(): void {
-    console.log('Generando QR de respaldo simple...');
-    
     try {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
-      
+
       if (!ctx) {
         throw new Error('No se pudo obtener contexto canvas');
       }
-    
+
       canvas.width = 200;
       canvas.height = 200;
-    
+
       ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
       ctx.strokeStyle = '#000000';
       ctx.lineWidth = 2;
       ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
-    
+
       ctx.fillStyle = '#000000';
       ctx.font = '12px Arial';
       ctx.textAlign = 'center';
       ctx.fillText('QR NO DISPONIBLE', canvas.width / 2, canvas.height / 2);
-    
+
       this.qrDataUrl = canvas.toDataURL();
       this.qrCargado = true;
-      console.log('QR de respaldo simple generado');
-    
+
     } catch (error) {
       console.error('Error generando QR de respaldo:', error);
       this.qrDataUrl = '';
@@ -267,32 +236,28 @@ export class FormularioReservacionDocenteComponent implements OnInit {
     }
   }
 
-  // MANEJADORES DE EVENTOS MEJORADOS
   onQRLoaded() {
-    console.log('✅ QR cargado y listo para escanear');
     this.qrCargado = true;
     this.errorQR = false;
   }
 
   onQRError() {
-    console.error('❌ Error cargando imagen QR');
     this.qrCargado = false;
     this.errorQR = true;
   }
 
   async regenerarQR() {
-    console.log('🔄 Regenerando QR...');
     this.qrDataUrl = '';
     this.qrCargado = false;
     this.errorQR = false;
-    
+
     await new Promise(resolve => setTimeout(resolve, 500));
     await this.generarQRConURL();
   }
 
   actualizarReservacion() {
-    if(!this.resumen) return;
-    Object.assign(this, {...this.resumen}); 
+    if (!this.resumen) return;
+    Object.assign(this, { ...this.resumen });
     this.resumen = null;
     this.reservacionConfirmada = false;
     this.qrGenerado = false;
@@ -302,83 +267,36 @@ export class FormularioReservacionDocenteComponent implements OnInit {
   }
 
   async cancelarReservacion() {
-    if(confirm('¿Está seguro de que desea cancelar esta reservación?')) {
+    if (confirm('¿Está seguro de que desea cancelar esta reservación?')) {
       try {
-        if(this.docId) {
-          await deleteDoc(doc(this.firestore,'reservas',this.docId));
+        if (this.docId) {
+          await deleteDoc(doc(this.firestore, 'reservas-docentes', this.docId));
         }
-        
+
         this.limpiarFormulario();
         alert('Reservación cancelada exitosamente');
-        
-      } catch(e){ 
-        console.error(e); 
-        alert('Error al cancelar la reservación'); 
+
+      } catch (e) {
+        console.error(e);
+        alert('Error al cancelar la reservación');
       }
     }
   }
 
-  // Método para probar la ruta (URL con hash)
-  probarRutaQR() {
-    if (this.docId) {
-      const urlQR = `/#/qrreserva?id=${this.docId}`; // ← CON HASH
-      console.log('🔗 Navegando a ruta con hash:', urlQR);
-      window.location.href = urlQR;
-    } else {
-      alert('Primero confirma una reservación');
-    }
-  }
-
-  // Método para verificar URL del QR
-  verificarURLQR() {
-    if (this.docId) {
-      const urlCompleta = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
-      console.log('🔗 URL COMPLETA con hash:', urlCompleta);
-      
-      // Abrir en nueva pestaña para probar
-      window.open(urlCompleta, '_blank');
-      
-      alert(`URL del QR generada:\n${urlCompleta}\n\nSe ha abierto en nueva pestaña.`);
-    } else {
-      alert('No hay ID de reservación generado');
-    }
-  }
-
-  // Método para probar ambas URLs (normal y con hash)
-  probarAmbasURLs() {
-    if (!this.docId) {
-      alert('No hay ID de reservación');
-      return;
-    }
-
-    const urlNormal = `https://ceutecbooking-980dd.web.app/qrreserva?id=${this.docId}`;
-    const urlConHash = `https://ceutecbooking-980dd.web.app/#/qrreserva?id=${this.docId}`;
-    
-    console.log('🔗 URL Normal:', urlNormal);
-    console.log('🔗 URL con Hash:', urlConHash);
-    
-    // Abrir ambas para probar
-    window.open(urlNormal, 'url_normal');
-    setTimeout(() => {
-      window.open(urlConHash, 'url_hash');
-    }, 500);
-    
-    alert(`Probando ambas URLs:\n\n• Normal: ${urlNormal}\n• Con Hash: ${urlConHash}\n\nSe abrirán en pestañas separadas.`);
-  }
-
   private limpiarFormulario() {
-    this.resumen = null; 
-    this.qrDataUrl = ''; 
-    this.docId = null; 
-    this.nombre = ''; 
-    this.nombreCarrera = ''; 
-    this.correo = ''; 
-    this.otraclase = []; 
-    this.campus = ''; 
-    this.sede = ''; 
-    this.tipoAula = ''; 
-    this.numeroaula = ''; 
-    this.fecha = ''; 
+    this.resumen = null;
+    this.qrDataUrl = '';
+    this.docId = null;
+    this.nombre = '';
+    this.numeroempleado = '';
+    this.correo = '';
+    this.clase = '';
+    this.seccion = '';
+    this.campus = '';
+    this.sede = '';
+    this.tipoaula = '';
+    this.numeroaula = '';
+    this.fecha = '';
     this.hora = '';
     this.qrGenerado = false;
     this.qrCargado = false;
@@ -398,21 +316,21 @@ export class FormularioReservacionDocenteComponent implements OnInit {
     return !this.esHoraDisponible(hora);
   }
 
-  // Propiedad computada para los items del resumen
   get resumenItems() {
     if (!this.resumen) return [];
-    
+
     return [
-      {label:'Nombre', value: this.resumen.nombre, icon:'fas fa-user azul'},
-      {label:'Nombre de la Carrera', value: this.resumen.nombreCarrera, icon:'fas fa-user-tie icono rojo'},
-      {label:'Correo', value: this.resumen.correo, icon:'fas fa-envelope azul'},
-      {label:'Otra Clase', value: this.resumen.otraclase.join(', ') || 'Ninguno', icon:'fas fa-users beige'},
-      {label:'Campus', value: this.resumen.campus, icon:'fas fa-university azul'},
-      {label:'Sede', value: this.resumen.sede || 'No especificada', icon:'fas fa-map-marker-alt rojo'},
-      {label:'Tipo de aula', value: this.resumen.tipoAula, icon:'fas fa-chalkboard beige'},
-      {label:'Número de aula', value: this.resumen.numeroaula, icon:'fas fa-door-open beige'},
-      {label:'Fecha reservación', value: this.resumen.fecha, icon:'fas fa-calendar-alt azul'},
-      {label:'Hora reservación', value: this.resumen.hora + ' (1.5 h)', icon:'fas fa-clock rojo'}
+      { label: 'Nombre', value: this.resumen.nombre, icon: 'fas fa-user azul' },
+      { label: 'Número de Empleado', value: this.resumen.numeroempleado, icon: 'fas fa-id-card rojo' },
+      { label: 'Correo', value: this.resumen.correo, icon: 'fas fa-envelope azul' },
+      { label: 'Clase', value: this.resumen.clase, icon: 'fas fa-graduation-cap beige' },
+      { label: 'Sección', value: this.resumen.seccion, icon: 'fas fa-graduation-cap azul' },
+      { label: 'Campus', value: this.resumen.campus, icon: 'fas fa-university azul' },
+      { label: 'Sede', value: this.resumen.sede || 'No especificada', icon: 'fas fa-map-marker-alt rojo' },
+      { label: 'Tipo de aula', value: this.resumen.tipoaula, icon: 'fas fa-chalkboard beige' },
+      { label: 'Número de aula', value: this.resumen.numeroaula, icon: 'fas fa-door-open beige' },
+      { label: 'Fecha reservación', value: this.resumen.fecha, icon: 'fas fa-calendar-alt azul' },
+      { label: 'Hora reservación', value: this.resumen.hora + ' (1.5 h)', icon: 'fas fa-clock rojo' }
     ];
   }
 }

@@ -1,47 +1,45 @@
 <div class="contenedor-qrreserva" role="main">
-  
   <!-- Header con Logo -->
-  <div class="header" role="banner">
+  <header class="header" role="banner">
     <div class="logo">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/CEUTEC_logo.svg/1200px-CEUTEC_logo.svg.png" 
-           alt="Logo CEUTEC" 
-           class="logo-imagen"
-           (error)="onImageError($event)">
+      <img src="https://portal.unitec.edu/Documentos/2025/CEUTEC/Logos/ORIGINAL_CEUTEC/Original.png" 
+           alt="Logo del Centro Universitario Tecnológico CEUTEC" 
+           class="logo-imagen">
     </div>
-    <h1 id="titulo-ceutec">CEUTEC</h1>
+    <h1>CEUTEC - DOCENTE</h1>
     <p class="subtitulo">Centro Universitario Tecnológico</p>
-  </div>
+  </header>
 
   <!-- Estado de carga -->
-  <div *ngIf="cargando" class="estado-carga" role="status" aria-live="polite">
-    <div class="spinner"></div>
-    <p>Verificando reservación...</p>
-  </div>
+  <section *ngIf="cargando" class="estado-carga" aria-live="polite" aria-busy="true">
+    <div class="spinner" role="status" aria-label="Cargando información de la reservación"></div>
+    <p>Verificando reservación docente...</p>
+  </section>
 
   <!-- Reservación válida -->
-  <div *ngIf="!cargando && reservacionValida && reservacion" class="contenido-reserva" role="region" aria-labelledby="titulo-reserva">
+  <section *ngIf="!cargando && reservacionvalida && reservacion" class="contenido-reserva" role="region" aria-labelledby="reserva-title">
     
     <!-- Información de emisión -->
     <div class="informacion-emision" role="group" aria-label="Información de emisión de la reservación">
       <div class="campo-emision">
         <label for="fecha-emision">Fecha de Emisión:</label>
-        <span id="fecha-emision">{{ fechaEmision }}</span>
+        <span id="fecha-emision">{{ fechaemision }}</span>
       </div>
       <div class="campo-emision">
         <label for="hora-emision">Hora de Emisión:</label>
-        <span id="hora-emision">{{ horaEmision }}</span>
+        <span id="hora-emision">{{ horaemision }}</span>
       </div>
     </div>
 
     <!-- Estado verificado -->
     <div class="estado-verificado" role="status" aria-live="polite">
       <i class="fas fa-check-circle" aria-hidden="true"></i>
-      <h2 id="titulo-reserva">RESERVACIÓN COMPLETADA</h2>
+      <h2 id="reserva-title">RESERVACIÓN DOCENTE COMPLETADA</h2>
     </div>
 
     <!-- Información de la reservación -->
-    <div class="informacion-reserva" role="region" aria-label="Detalles de la reservación">
-      <h3>INFORMACIÓN DE LA RESERVACIÓN</h3>
+    <div class="informacion-reserva" role="group" aria-label="Detalles de la reservación docente">
+      <h3>INFORMACIÓN DE LA RESERVACIÓN DOCENTE</h3>
       
       <div class="campo">
         <label><i class="fas fa-user" aria-hidden="true"></i> Nombre Completo:</label>
@@ -49,8 +47,8 @@
       </div>
       
       <div class="campo">
-        <label><i class="fas fa-id-card" aria-hidden="true"></i> Número de Cuenta:</label>
-        <span>{{ reservacion.numeroCuenta }}</span>
+        <label><i class="fas fa-id-card" aria-hidden="true"></i> Número de Empleado:</label>
+        <span>{{ reservacion.numeroempleado }}</span>
       </div>
       
       <div class="campo">
@@ -58,6 +56,16 @@
         <span>{{ reservacion.correo }}</span>
       </div>
       
+      <div class="campo">
+        <label><i class="fas fa-graduation-cap" aria-hidden="true"></i> Clase:</label>
+        <span>{{ reservacion.clase }}</span>
+      </div>
+      
+      <div class="campo">
+        <label><i class="fas fa-graduation-cap" aria-hidden="true"></i> Sección:</label>
+        <span>{{ reservacion.seccion }}</span>
+      </div>
+
       <div class="campo">
         <label><i class="fas fa-university" aria-hidden="true"></i> Campus:</label>
         <span>{{ reservacion.campus }}</span>
@@ -70,7 +78,7 @@
       
       <div class="campo">
         <label><i class="fas fa-chalkboard" aria-hidden="true"></i> Tipo de Aula:</label>
-        <span>{{ reservacion.tipoAula }}</span>
+        <span>{{ reservacion.tipoaula }}</span>
       </div>
       
       <div class="campo">
@@ -87,15 +95,10 @@
         <label><i class="fas fa-clock" aria-hidden="true"></i> Hora de Reservación:</label>
         <span>{{ reservacion.hora }} (Duración: 1.5 horas)</span>
       </div>
-      
-      <div class="campo full-width" *ngIf="reservacion.otrosEstudiantes && reservacion.otrosEstudiantes.length > 0">
-        <label><i class="fas fa-users" aria-hidden="true"></i> Otros Estudiantes:</label>
-        <span class="lista-estudiantes">{{ reservacion.otrosEstudiantes.join(', ') }}</span>
-      </div>
     </div>
 
     <!-- Mensaje de presentación -->
-    <div class="mensaje-presentacion" role="note" aria-label="Indicaciones importantes">
+    <div class="mensaje-presentacion" role="note" aria-label="Indicaciones de presentación ante autoridades">
       <i class="fas fa-id-card" aria-hidden="true"></i>
       <div class="texto-mensaje">
         <h4>PRESENTAR EN CASO DE SER REQUERIDO POR LAS AUTORIDADES UNIVERSITARIAS</h4>
@@ -104,34 +107,35 @@
 
     <!-- Botón para volver -->
     <div class="botones-reserva">
-      <button class="btn-volver" (click)="volverInicio()" aria-label="Volver al formulario de reservación">
-        <i class="fas fa-arrow-left" aria-hidden="true"></i> Volver al Formulario
+      <button class="btn-volver" (click)="volverinicio()" aria-label="Volver al formulario de reservación docente">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i> Volver al Formulario Docente
       </button>
     </div>
-  </div>
+  </section>
 
   <!-- Reservación no encontrada -->
-  <div *ngIf="!cargando && !reservacionValida && !error" class="estado-error" role="alert">
+  <section *ngIf="!cargando && !reservacionvalida && !error" class="estado-error" role="alert" aria-live="assertive">
     <div class="tarjeta-error">
       <i class="fas fa-times-circle" aria-hidden="true"></i>
       <h2>RESERVACIÓN NO ENCONTRADA</h2>
-      <p>La reservación no existe en nuestro sistema.</p>
+      <p>La reservación docente no existe en nuestro sistema.</p>
+      <p><strong>ID buscado:</strong> {{ idreservacion }}</p>
       <p>Verifique el código QR escaneado.</p>
-      <button class="btn-volver" (click)="volverInicio()" aria-label="Volver al formulario de reservación">
-        <i class="fas fa-arrow-left" aria-hidden="true"></i> Volver al Formulario
+      <button class="btn-volver" (click)="volverinicio()" aria-label="Volver al formulario de reservación docente">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i> Volver al Formulario Docente
       </button>
     </div>
-  </div>
+  </section>
 
   <!-- Error de verificación -->
-  <div *ngIf="!cargando && error" class="estado-error" role="alert">
+  <section *ngIf="!cargando && error" class="estado-error" role="alert" aria-live="assertive">
     <div class="tarjeta-error">
       <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
       <h2>ERROR DE VERIFICACIÓN</h2>
       <p>No se pudo verificar la reservación en este momento.</p>
-      <button class="btn-volver" (click)="volverInicio()" aria-label="Volver al formulario de reservación">
-        <i class="fas fa-arrow-left" aria-hidden="true"></i> Volver al Formulario
+      <button class="btn-volver" (click)="volverinicio()" aria-label="Volver al formulario de reservación docente">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i> Volver al Formulario Docente
       </button>
     </div>
-  </div>
+  </section>
 </div>

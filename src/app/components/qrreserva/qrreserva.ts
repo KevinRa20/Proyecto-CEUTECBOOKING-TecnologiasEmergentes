@@ -33,14 +33,12 @@ export class QrreservaComponent implements OnInit {
   reservacionValida = false;
   idReservacion: string = '';
 
-  // Fechas de emisión
   fechaEmision = new Date().toLocaleDateString('es-HN');
   horaEmision = new Date().toLocaleTimeString('es-HN');
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.idReservacion = params['id'];
-      
       if (this.idReservacion) {
         this.verificarReservacion(this.idReservacion);
       } else {
@@ -54,7 +52,6 @@ export class QrreservaComponent implements OnInit {
     try {
       const docRef = doc(this.firestore, 'reservas', id);
       const docSnap = await getDoc(docRef);
-      
       if (docSnap.exists()) {
         this.reservacion = docSnap.data() as Reservacion;
         this.reservacionValida = true;
@@ -69,7 +66,6 @@ export class QrreservaComponent implements OnInit {
     }
   }
 
-  // Manejar error de imagen
   onImageError(event: any) {
     console.log('Error cargando imagen');
     event.target.style.display = 'none';
