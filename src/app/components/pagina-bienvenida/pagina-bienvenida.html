@@ -1,24 +1,28 @@
-<div class="contenedor">
-  <div class="tarjeta">
+<div class="contenedor" role="main">
+  <div class="tarjeta" role="region" aria-labelledby="titulo-bienvenida">
+    
     <div class="encabezado">
-      <img class="logo" src="https://ceutec.hn/wp-content/uploads/2025/01/logo-ceutec-web.png" alt="Logo CEUTEC">
+      <img class="logo" src="https://ceutec.hn/wp-content/uploads/2025/01/logo-ceutec-web.png" alt="Logo CEUTEC" role="img">
+      
       <div class="titulo">
-        <h1>CEUTEC <span>Booking</span></h1>
+        <h1 id="titulo-bienvenida">CEUTEC <span>Booking</span></h1>
         <p>Reserva tus aulas de forma rápida y sencilla</p>
       </div>
-      <img class="icono-booking" src="https://img.icons8.com/color/96/000000/calendar--v1.png" alt="Icono calendario">
+      
+      <img class="icono-booking" src="https://img.icons8.com/color/96/000000/calendar--v1.png" alt="Icono de calendario" role="img">
     </div>
 
     <div class="contenido">
       <h2>Bienvenido</h2>
       <p>Selecciona una opción para continuar</p>
 
-      <div class="botones">
-        <button class="btn estudiante" (click)="irAEstudiante()">
-          <i class="fas fa-user-graduate"></i> Soy Estudiante
+      <div class="botones" role="group" aria-label="Opciones de acceso">
+        <button class="btn estudiante" (click)="irAEstudiante()" aria-label="Ir a login de Estudiante">
+          <i class="fas fa-user-graduate" aria-hidden="true"></i> Soy Estudiante
         </button>
-        <button class="btn docente" (click)="irADocente()">
-          <i class="fas fa-chalkboard-teacher"></i> Soy Docente
+
+        <button class="btn docente" (click)="irADocente()" aria-label="Ir a login de Docente">
+          <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> Soy Docente
         </button>
       </div>
     </div>

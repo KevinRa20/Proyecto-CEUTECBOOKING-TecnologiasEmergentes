@@ -1,19 +1,45 @@
-<div class="fondo">
+<div class="fondo" role="main">
+
   <div class="overlay"></div>
   <div class="tarjeta">
 
     <!-- LOGIN -->
-    <form *ngIf="!mostrarRegistro" (ngSubmit)="login()" class="fade">
+    <form 
+      *ngIf="!mostrarRegistro" 
+      (ngSubmit)="login()" 
+      class="fade" 
+      role="form"
+      aria-labelledby="login-title"
+      aria-describedby="login-feedback"
+    >
       <img src="https://ceutec.hn/wp-content/uploads/2025/01/logo-ceutec-web.png" alt="Logo CEUTEC" class="logo">
-      <h2>Login Estudiante</h2>
+      <h2 id="login-title">Login Estudiante</h2>
 
-      <label><i class="fas fa-envelope"></i> Correo:</label>
-      <input type="email" [(ngModel)]="correo" name="correo" required placeholder="ejemplo@correo.edu">
+      <label for="correo-login"><i class="fas fa-envelope"></i> Correo:</label>
+      <input 
+        id="correo-login" 
+        type="email" 
+        [(ngModel)]="correo" 
+        name="correo" 
+        required 
+        placeholder="ejemplo@correo.edu" 
+        aria-required="true" 
+        aria-label="Correo electrónico del estudiante"
+      >
 
-      <label><i class="fas fa-lock"></i> Contraseña:</label>
-      <input type="password" [(ngModel)]="contrasena" name="contrasena" required placeholder="********">
+      <label for="contrasena-login"><i class="fas fa-lock"></i> Contraseña:</label>
+      <input 
+        id="contrasena-login" 
+        type="password" 
+        [(ngModel)]="contrasena" 
+        name="contrasena" 
+        required 
+        placeholder="********" 
+        aria-required="true" 
+        aria-label="Contraseña del estudiante"
+      >
 
-      <button type="submit" class="btn-login">
+      <button type="submit" class="btn-login" aria-label="Iniciar sesión como estudiante">
         <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
       </button>
 
@@ -24,20 +50,54 @@
     </form>
 
     <!-- REGISTRO -->
-    <form *ngIf="mostrarRegistro" (ngSubmit)="registrar()" class="fade">
+    <form 
+      *ngIf="mostrarRegistro" 
+      (ngSubmit)="registrar()" 
+      class="fade" 
+      role="form"
+      aria-labelledby="registro-title"
+      aria-describedby="registro-feedback"
+    >
       <img src="https://ceutec.hn/wp-content/uploads/2025/01/logo-ceutec-web.png" alt="Logo CEUTEC" class="logo">
-      <h2>Registro Estudiante</h2>
+      <h2 id="registro-title">Registro Estudiante</h2>
 
-      <label><i class="fas fa-user"></i> Nombre:</label>
-      <input type="text" [(ngModel)]="nombre" name="nombre" required placeholder="Tu nombre completo">
+      <label for="nombre-registro"><i class="fas fa-user"></i> Nombre:</label>
+      <input 
+        id="nombre-registro" 
+        type="text" 
+        [(ngModel)]="nombre" 
+        name="nombre" 
+        required 
+        placeholder="Tu nombre completo" 
+        aria-required="true" 
+        aria-label="Nombre completo del estudiante"
+      >
 
-      <label><i class="fas fa-envelope"></i> Correo:</label>
-      <input type="email" [(ngModel)]="correo" name="correoRegistro" required placeholder="ejemplo@correo.edu">
+      <label for="correo-registro"><i class="fas fa-envelope"></i> Correo:</label>
+      <input 
+        id="correo-registro" 
+        type="email" 
+        [(ngModel)]="correo" 
+        name="correoRegistro" 
+        required 
+        placeholder="ejemplo@correo.edu" 
+        aria-required="true" 
+        aria-label="Correo electrónico del estudiante"
+      >
 
-      <label><i class="fas fa-lock"></i> Contraseña:</label>
-      <input type="password" [(ngModel)]="contrasena" name="contrasenaRegistro" required placeholder="********">
+      <label for="contrasena-registro"><i class="fas fa-lock"></i> Contraseña:</label>
+      <input 
+        id="contrasena-registro" 
+        type="password" 
+        [(ngModel)]="contrasena" 
+        name="contrasenaRegistro" 
+        required 
+        placeholder="********" 
+        aria-required="true" 
+        aria-label="Contraseña del estudiante"
+      >
 
-      <button type="submit" class="btn-registro">
+      <button type="submit" class="btn-registro" aria-label="Registrarse como estudiante">
         <i class="fas fa-user-plus"></i> Registrarse
       </button>
 
@@ -47,6 +107,14 @@
       </p>
     </form>
 
-    <p class="mensaje" [class.visible]="mensaje">{{ mensaje }}</p>
+    <!-- Mensaje dinámico accesible -->
+    <p 
+      id="login-feedback" 
+      class="mensaje" 
+      role="status" 
+      aria-live="polite" 
+      [class.visible]="mensaje"
+    >{{ mensaje }}</p>
+
   </div>
 </div>

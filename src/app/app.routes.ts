@@ -3,17 +3,11 @@ import { PaginaBienvenidaComponent } from './components/pagina-bienvenida/pagina
 import { LoginEstudianteComponent } from './login/login-estudiante';
 import { RegistroEstudianteComponent } from './components/registro/registro-estudiante';
 import { FormularioReservacionEstudianteComponent } from './components/formulario-reservacion-estudiante/formulario-reservacion-estudiante';
-
-export const routes: Routes = [
-  { path: '', component: PaginaBienvenidaComponent },          // Página de bienvenida
-  { path: 'login-estudiante', component: LoginEstudianteComponent },
-  { path: 'registro-estudiante', component: RegistroEstudianteComponent },
-  { path: 'formulario-reservacion-estudiante', component: FormularioReservacionEstudianteComponent } // Formulario
 import { FormularioReservacionDocenteComponent } from './components/formulario-reservacion-docente/formulario-reservacion-docente';
-import { FormularioReservacionDocente } from './components/formulario-reservacion-docente/formulario-reservacion-docente';
 import { RegistroDocenteComponent } from './components/registro/registro-docente';
 import { LoginDocenteComponent } from './login/login-docente';
 import { QrreservaComponent } from './components/qrreserva/qrreserva';
+import { QrreservaDocenteComponent } from './components/qrreserva-docente/qrreserva-docente';
 
 export const routes: Routes = [
   { path: '', component: PaginaBienvenidaComponent },
@@ -24,13 +18,6 @@ export const routes: Routes = [
   { path: 'formulario-reservacion-estudiante', component: FormularioReservacionEstudianteComponent },
   { path: 'formulario-reservacion-docente', component: FormularioReservacionDocenteComponent },
   { path: 'qrreserva', component: QrreservaComponent },
+  { path: 'qrreserva-docente', component: QrreservaDocenteComponent },
   { path: '**', redirectTo: '' }
-];
-  { path: 'formulario-reservacion-docente', component: FormularioReservacionDocente },
-  { path: 'qrreserva', component: QrreservaComponent },
-  { path: '**', redirectTo: '' }
-];
-  { path: 'formulario-reservacion-docente', component: FormularioReservacionDocente }
-  
-   
 ];

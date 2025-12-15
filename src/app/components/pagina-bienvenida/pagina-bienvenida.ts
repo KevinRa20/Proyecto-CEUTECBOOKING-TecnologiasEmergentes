@@ -9,7 +9,12 @@ import { Router } from '@angular/router';
 })
 export class PaginaBienvenidaComponent {
   constructor(private router: Router) {}
-  irAEstudiante() { this.router.navigate(['/login-estudiante']); }
-  irADocente() { alert('👨‍🏫 Funcionalidad de docente próximamente.'); }
-  irADocente() { this.router.navigate(['/login-docente']); }
+
+  irAEstudiante() {
+    this.router.navigate(['/login-estudiante']);
+  }
+
+  irADocente() {
+    this.router.navigate(['/login-docente']);
+  }
 }

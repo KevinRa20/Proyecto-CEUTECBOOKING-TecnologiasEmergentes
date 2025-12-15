@@ -1,14 +1,48 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>CEUTECBOOKING</title>
+  <title>CEUTEC Booking</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- PWA CONFIGURATION -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#ffffff">
+  
+  <!-- Apple iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CEUTEC Booking">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
+  
+  <!-- Microsoft PWA -->
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="assets/icons/icon-144x144.png">
+  <meta name="msapplication-config" content="browserconfig.xml">
+  
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon-16x16.png">
+  
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Styles -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- For iOS -->
+  <link rel="apple-touch-startup-image" href="assets/splash/apple-splash-2048-2732.jpg" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  
+  <!-- For Android -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
 </head>
 <body>
   <app-root></app-root>
+  
+  <!-- PWA Install Prompt Container (se creará dinámicamente) -->
+  <div id="pwa-containers"></div>
 </body>
 </html>

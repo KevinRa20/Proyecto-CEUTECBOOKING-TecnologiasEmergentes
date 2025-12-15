@@ -11,7 +11,6 @@ export class AuthService {
   private db: Firestore;
 
   constructor() {
-    const app = initializeApp(firebaseConfig); // Inicializa Firebase solo con Firestore
     const app = initializeApp(firebaseConfig);
     this.db = getFirestore(app);
   }
@@ -26,9 +25,6 @@ export class AuthService {
         where('contrasena', '==', contrasena)
       );
       const snapshot = await getDocs(q);
-      return !snapshot.empty; // true si existe coincidencia
-    } catch (error) {
-      console.error('Error login:', error);
       return !snapshot.empty;
     } catch (error) {
       console.error('Error login estudiante:', error);
@@ -57,14 +53,6 @@ export class AuthService {
   async registrarEstudiante(nombre: string, correo: string, contrasena: string): Promise<void> {
     try {
       const estudiantesRef = collection(this.db, 'estudiantes');
-      const docRef = doc(estudiantesRef); // crea un id automático
-      await setDoc(docRef, { nombre, correo, contrasena });
-    } catch (error) {
-      console.error('Error registro:', error);
-      throw error;
-    }
-  }
-}
       const docRef = doc(estudiantesRef);
       await setDoc(docRef, { 
         nombre, 

@@ -1,12 +1,58 @@
-<div class="contenedor">
-  <div class="tarjeta">
-    <h2>Registro Estudiante</h2>
-    <form (ngSubmit)="registrar()">
-      <label>Nombre:</label><input type="text" [(ngModel)]="nombre" name="nombre" required>
-      <label>Correo:</label><input type="email" [(ngModel)]="correo" name="correo" required>
-      <label>Contraseña:</label><input type="password" [(ngModel)]="contrasena" name="contrasena" required>
-      <button type="submit">Registrarse</button>
+<div class="contenedor" role="main">
+
+  <div class="tarjeta" role="form" aria-labelledby="registro-estudiante-title">
+    <h2 id="registro-estudiante-title">Registro Estudiante</h2>
+
+    <form (ngSubmit)="registrar()" aria-describedby="mensaje-feedback">
+
+      <label for="nombre">Nombre:</label>
+      <input 
+        id="nombre" 
+        type="text" 
+        [(ngModel)]="nombre" 
+        name="nombre" 
+        required 
+        aria-required="true" 
+        aria-label="Nombre completo del estudiante"
+        placeholder="Ingresa tu nombre completo"
+      />
+
+      <label for="correo">Correo:</label>
+      <input 
+        id="correo" 
+        type="email" 
+        [(ngModel)]="correo" 
+        name="correo" 
+        required 
+        aria-required="true" 
+        aria-label="Correo electrónico del estudiante"
+        placeholder="ejemplo@correo.edu"
+      />
+
+      <label for="contrasena">Contraseña:</label>
+      <input 
+        id="contrasena" 
+        type="password" 
+        [(ngModel)]="contrasena" 
+        name="contrasena" 
+        required 
+        aria-required="true" 
+        aria-label="Contraseña para acceder al sistema"
+        placeholder="********"
+      />
+
+      <button 
+        type="submit" 
+        aria-label="Registrarse como estudiante"
+      >Registrarse</button>
     </form>
-    <p class="mensaje">{{ mensaje }}</p>
+
+    <p 
+      id="mensaje-feedback" 
+      class="mensaje" 
+      role="status" 
+      aria-live="polite"
+    >{{ mensaje }}</p>
   </div>
+
 </div>

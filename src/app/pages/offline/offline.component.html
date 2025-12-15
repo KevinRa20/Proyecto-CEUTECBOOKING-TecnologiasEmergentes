@@ -1,0 +1,51 @@
+<div class="offline-container">
+  <div class="offline-content">
+    <div class="offline-icon">
+      <i class="fas fa-wifi-slash"></i>
+    </div>
+    
+    <h1>Sin Conexión a Internet</h1>
+    
+    <p class="offline-message">
+      No hay conexión a internet disponible. Algunas funciones de la aplicación requieren conexión.
+    </p>
+    
+    <div class="offline-features">
+      <div class="feature-item">
+        <i class="fas fa-check-circle"></i>
+        <span>Ver reservaciones existentes</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-check-circle"></i>
+        <span>Consultar información guardada</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-times-circle"></i>
+        <span>Crear nuevas reservaciones</span>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-times-circle"></i>
+        <span>Sincronizar con el servidor</span>
+      </div>
+    </div>
+    
+    <div class="offline-actions">
+      <button class="btn-retry" (click)="reintentarConexion()">
+        <i class="fas fa-redo"></i> Reintentar Conexión
+      </button>
+      <button class="btn-exit" (click)="salirAplicacion()" *ngIf="pwaService.isPwaInstalled()">
+        <i class="fas fa-sign-out-alt"></i> Salir de la Aplicación
+      </button>
+    </div>
+    
+    <div class="offline-tips">
+      <h3><i class="fas fa-lightbulb"></i> Consejos:</h3>
+      <ul>
+        <li>Verifica tu conexión WiFi o datos móviles</li>
+        <li>Activa el modo avión y desactívalo nuevamente</li>
+        <li>Reinicia tu router o módem</li>
+        <li>Contacta a tu proveedor de internet</li>
+      </ul>
+    </div>
+  </div>
+</div>
