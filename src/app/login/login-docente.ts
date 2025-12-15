@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -56,11 +59,17 @@ export class LoginDocenteComponent {
     }
 
     try {
-      await this.authService.registrarDocente(this.nombre, this.correo, this.contrasena);
-      this.mensaje = '✅ Registro exitoso. Ahora puedes iniciar sesión.';
-      this.mostrarRegistro = false;
+      const ok = await this.authService.loginEstudiante(this.correo, this.contrasena);
+
+      if (ok) {
+        this.mensaje = '✅ Inicio de sesión exitoso';
+        setTimeout(() => this.router.navigate(['/formulario-reservacion-docente']), 1000);
+      } else {
+        this.mensaje = '❌ Usuario no registrado. Por favor regístrate.';
+        this.mostrarRegistro = true; // muestra registro automáticamente
+      }
     } catch (error: any) {
-      this.mensaje = '❌ Error al registrarse: ' + error.message;
+      this.mensaje = '⚠️ Error al iniciar sesión: ' + error.message;
     }
   }
 
